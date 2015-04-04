@@ -14,7 +14,7 @@ def client(room_id):
     pass
 
 
-@app.route('host/<room_id>')
+@app.route('/host/<room_id>')
 def host(room_id):
     pass
 
