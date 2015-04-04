@@ -8,12 +8,10 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<<<<<<< HEAD
-        <!-- <link rel="stylesheet" type="application/javascript" href = "{{ url_for('static', filename='client.js') }}"> -->
-=======
+
 
         <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
->>>>>>> 52990b5416fe5e045a086900ac7cfd1fc2b9ed84
+
         {% block head %} {% endblock %}
     </head>
     <body>
