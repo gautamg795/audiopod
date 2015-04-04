@@ -5,3 +5,8 @@
 {% block body %}
 <h1> body stuff </h1>
 {% endblock %}
+
+{% block scripts %}
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="{{ url_for('static', filename='client.js') }}"></script>
+{% endblock %}
