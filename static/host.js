@@ -1,10 +1,23 @@
-/* host.js
+/*
+ * host.js
  * used by the host to play videos in the queue and receive videos from clients
  */
 
 var player;
 var videoQueue = [];
-
+var prefix = "mediabox_";
+var PUBNUB = PUBNUB.init({
+        subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
+    });
+PUBNUB.subscribe({
+    channel: prefix + room_id,
+    message: function(vid){ addToQueue(vid); },
+    error: function (error) {
+      // Handle error here
+      console.log(JSON.stringify(error));
+    }
+})
+console.log("Listening for messages from pubnub in channel " + prefix + room_id);
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
@@ -36,6 +49,7 @@ function playNextVideo()
 
 function addToQueue(vid)
 {
+    console.log("Queueing video with id " + vid);
     videoQueue.push(vid);
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
