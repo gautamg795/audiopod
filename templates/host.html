@@ -8,19 +8,24 @@
 <div class="container">
     <div class="jumbotron">
         <h1>MediaBox</h1>
-        <h2>Add Your Music To the Mix! <br> Visit <a href="MediaBox.io/client/{{ room_id }}">MediaBox.io/client/{{ room_id }}</a></h2>
+        <div class="col-md-12 hidden-xs">
+            <h2>Add Your Music to the Mix! <br> Visit <a href="MediaBox.io/client/{{ room_id }}">MediaBox.io/client/{{ room_id }}</a></h2>
+        </div>
+        <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
+            <h3><a href="MediaBox.io/client/{{ room_id }}">MediaBox.io/client/{{ room_id }}</a></h3>
+        </div>
 
         <!-- Search bar -->
         <div class="row">
-            <div class="col-sm-2 hidden-md hidden-xs hidden-lg">
+            <div class="col-xs-2 hidden-md hidden-sm hidden-lg">
                 <button class="btn btn-default" type="submit">
                 Search: </button>
             </div>
-            <div class="col-md-2 hidden-sm">
+            <div class="col-md-2 col-sm-2 hidden-xs">
                 <button class="btn btn-default" type="submit">
                 Search: </button>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 col-sm-10 col-xs-10">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                     <input type="text" class="form-control" id="song">
@@ -41,10 +46,10 @@
 
         <!-- Skip button -->
         <div class="row">
-            <div class="col-md-7" style="text-align: center">
+            <div class="col-md-7 col-xs-10" style="text-align: center">
                 <h4>Did Gautam pick this song?</h4>        
             </div>
-            <div class="col-md-5">
+            <div class="col-md-5 col-xs-2">
                 <button type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon glyphicon-step-forward"></span>
                 </button>
@@ -57,62 +62,62 @@
                 <h4>Next Up:</h4>        
             </div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-2">
                     <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
-                <div class="col-md-4">
-                    <h4> Video Thumbnail Here</h4>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
                 </div>
-                <div class="col-md-7">
-                    <h4> Video Info Here </h4>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-2">
                     <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
-                <div class="col-md-4">
-                    <h4> Video Thumbnail Here</h4>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
                 </div>
-                <div class="col-md-7">
-                    <h4> Video Info Here </h4>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-2">
                     <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
-                <div class="col-md-4">
-                    <h4> Video Thumbnail Here</h4>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
                 </div>
-                <div class="col-md-7">
-                    <h4> Video Info Here </h4>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-1 col-xs-2">
                     <button type="button" class="btn btn-default">
                         <span class="glyphicon glyphicon-minus"></span>
                     </button>
                 </div>
-                <div class="col-md-4">
-                    <h4> Video Thumbnail Here</h4>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
                 </div>
-                <div class="col-md-7">
-                    <h4> Video Info Here </h4>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
                 </div>
             </div>
         </div>
     </div>
 
     <footer class="footer">
-        <p>&copy; DJGJ 2015</p>
+        <p>Made with no sleep, by DJGJ @ LA Hacks 2K15</p>
     </footer>
 </div>
 {% endblock %}
