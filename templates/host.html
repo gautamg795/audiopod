@@ -8,35 +8,80 @@
 <div class="container">
     <div class="jumbotron">
         <h1>MediaBox</h1>
+        <h2>Add Your Music To the Mix! <br> Visit <a href="MediaBox.io/client/{{ room_id }}">MediaBox.io/client/{{ room_id }}</a></h2>
+        <div class="row">
+            <div class="col-sm-2 hidden-md hidden-xs hidden-lg">
+                <button class="btn btn-default" type="submit">
+                Search: </button>
+            </div>
+            <div class="col-md-2 hidden-sm">
+                <button class="btn btn-default" type="submit">
+                Search: </button>
+            </div>
+            <div class="col-md-10">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                    <input type="text" class="form-control" id="song">
+                    </div>
+                </form>
+            </div>
+        </div>
 
+        <!-- Main video -->
         <div class="row">
             <div class="col-md-12">
-              <div class="embed-responsive embed-responsive-16by9">
+                <div class="embed-responsive embed-responsive-16by9">
                     <div id="player" style="text-align: center">
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row">
+        <!-- Other videos -->
+        <div class="search-results">
             <div class="col-md-12" style="text-align: center">
-              <h4>Next Up:</h4>
-              <p>Money on My Mind</p>
+                <h4>Next Up:</h4>        
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-2">
-            <button class="btn btn-default" type="submit">
-            Add a song!</button>
-        </div>
-        <div class="col-md-10">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                <input type="text" class="form-control" id="song">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4> Video Thumbnail Here</h4>
                 </div>
-            </form>
+                <div class="col-md-8">
+                    <h4> Video Info Here </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4> Video Thumbnail Here</h4>
+                </div>
+                <div class="col-md-8">
+                    <h4> Video Info Here </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4> Video Thumbnail Here</h4>
+                </div>
+                <div class="col-md-8">
+                    <h4> Video Info Here </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4> Video Thumbnail Here</h4>
+                </div>
+                <div class="col-md-8">
+                    <h4> Video Info Here </h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <h4> Video Thumbnail Here</h4>
+                </div>
+                <div class="col-md-8">
+                    <h4> Video Info Here </h4>
+                </div>
+            </div>
         </div>
     </div>
 
