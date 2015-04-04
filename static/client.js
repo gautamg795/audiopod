@@ -6,8 +6,7 @@
  var prefix = "mediabox_";
  var PUBNUB = PUBNUB.init({
  	publish_key: 'pub-c-41b0baa3-2397-4bcd-a6bf-b84e2eed005c',
-	subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f',
-	ssl: true
+ 	subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
  });
 
  function queueVideo(vid)
