@@ -7,7 +7,8 @@ var player;
 var videoQueue = [];
 var prefix = "mediabox_";
 var PUBNUB = PUBNUB.init({
-        subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
+        subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f',
+        ssl: true
     });
 PUBNUB.subscribe({
     channel: prefix + room_id,
