@@ -116,5 +116,7 @@
 
 {% block scripts %}
 <script src="http://www.youtube.com/iframe_api"></script>
+<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='search.js') }}"></script>
 <script src="{{ url_for('static', filename='host.js') }}"></script>
 {% endblock %}

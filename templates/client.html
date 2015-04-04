@@ -9,6 +9,7 @@
 <div class="container">
     <div class="jumbotron">
         <h1>songbox</h1>
+        <p>the social music player</p>
 
         <!-- Search bar -->
         <div class="row">
@@ -24,8 +25,9 @@
                 </div>
         </div>
 <br />
+		<div class="row" id="searchResults"></div>
         <!-- Other videos -->
-        <div class="search-results">
+        <div class="next-up">
             <div class="col-md-12" style="text-align: center">
                 <h4>Next Up:</h4>        
             </div>
@@ -89,8 +91,7 @@
 
 {% block scripts %}
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://apis.google.com/js/client.js?onload=onClientLoad" 
-		type="text/javascript"></script>
+<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 
 <script src="{{ url_for('static', filename='client.js') }}"></script>
 <script src="{{ url_for('static', filename='search.js') }}"></script>
