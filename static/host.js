@@ -3,25 +3,50 @@
  */
 
 var player;
+var videoQueue = [];
 
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
         width: '640',
         events: {
-            'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
         }
     });
 }
 
-// autoplay video
-function onPlayerReady(event) {
-}
 
 // when video ends
 function onPlayerStateChange(event) {        
     if(event.data === 0) {          
-        alert('done');
+        playNextVideo();
     }
+}
+
+function playNextVideo()
+{
+    console.log("Playing next video");
+    if (videoQueue.length == 0) {
+        console.log("Video queue was empty");
+        return;
+    }
+    var id = videoQueue.shift();
+    player.loadVideoById(id);
+}
+
+function addToQueue(vid)
+{
+    videoQueue.push(vid);
+    /*
+     * TODO: Update the HTML on the page to add it to the "up next"
+     */
+    var state = player.getPlayerState();
+    if (videoQueue.length == 1 && (state == -1 || state == 5 || state == 0 ))
+        playNextVideo();
+}
+
+function skipVideo()
+{
+    player.stopVideo(); // in case this is the last video in the queue
+    playNextVideo();
 }
