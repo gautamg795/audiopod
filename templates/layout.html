@@ -8,7 +8,12 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<<<<<<< HEAD
         <!-- <link rel="stylesheet" type="application/javascript" href = "{{ url_for('static', filename='client.js') }}"> -->
+=======
+
+        <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+>>>>>>> 52990b5416fe5e045a086900ac7cfd1fc2b9ed84
         {% block head %} {% endblock %}
     </head>
     <body>
@@ -21,8 +26,20 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         {% block scripts %}
         {% endblock %}
+
         <footer class="footer">
             <div class="container">
+                <div id="share-buttons">
+                <!-- Facebook -->
+                <a href="http://www.facebook.com/sharer.php?u=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+                <!-- Twitter -->
+                <a href="http://twitter.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
+                <!-- Google+ -->
+                <a href="https://plus.google.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+                <!-- Pinterest -->
+                <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><img src="http://www.simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" /></a>
+                </div>
+
                 <p class="text-muted">Made with no sleep, by DJGJ @ LA Hacks 2K15</p>
             </div>
         </footer>
@@ -38,6 +55,7 @@
                     <div class="panel-collapse collapse in" id="collapseFour">
                         <div class="list-group">
                         <% _.each(videos, function(video) { %>
+
                             <div class="hoverclass">
                                 <a href="#" id="video_<%= video.num %>" onClick="queueVideo('<%= video.vid %>')">
                                 <li class="list-group-item media" id="<%= video.vid %>"> 
@@ -50,6 +68,7 @@
                                 </li>
                                 </a>
                             </div>
+
                             <% }) %>
                         </div>
                     </div>
