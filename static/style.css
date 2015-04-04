@@ -13,6 +13,9 @@
 	border-width: 5px;
 }
 
+.media {
+  margin-top: 0px;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

@@ -14,7 +14,7 @@ var PUBNUB = PUBNUB.init({
     });
 PUBNUB.subscribe({
     channel: prefix + room_id,
-    message: function(vid){ addToQueue(vid); },
+    message: function(video_info){ addToQueue(video_info); },
     error: function (error) {
       // Handle error here
       console.log(JSON.stringify(error));
@@ -46,14 +46,14 @@ function playNextVideo()
         console.log("Video queue was empty");
         return;
     }
-    var id = videoQueue.shift();
-    player.loadVideoById(id);
+    var video = videoQueue.shift();
+    player.loadVideoById(video.vid);
 }
 
-function addToQueue(vid)
+function addToQueue(video_info)
 {
-    console.log("Queueing video with id " + vid);
-    videoQueue.push(vid);
+    console.log("Queueing video");
+    videoQueue.push(JSON.parse(video_info));
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
      */
@@ -66,4 +66,19 @@ function skipVideo()
 {
     player.stopVideo(); // in case this is the last video in the queue
     playNextVideo();
+}
+
+
+
+
+function anchorSearchResults()
+{
+    $(".searchResultEntry").click(function(event) {
+        var v_id = event.target.closest(".searchResultEntry").id;
+        var video = _.findWhere(searchResults, {vid: v_id});
+        addToQueue(JSON.stringify(video));
+        $("#searchResults").children().fadeOut(500, function() { $(this).remove(); })
+        $("#searchText").val("")
+        /* show notification on screen */
+    });
 }

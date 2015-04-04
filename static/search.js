@@ -57,4 +57,5 @@ function onSearchResponse(response){
 	$("#searchResults").empty();
 	var result = compiledTemplate(context);
 	$(result).hide().appendTo("#searchResults").fadeIn(1000);
+	anchorSearchResults();
 }

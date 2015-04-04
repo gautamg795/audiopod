@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}songbox host{% endblock %}
 {% block head %}
+<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
 
 {% block body %}
@@ -28,6 +29,9 @@
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
+        <br />
+        <div class="row" id="searchResults"></div>
         <br>
         <!-- Main video -->
         <div class="row">
@@ -116,7 +120,7 @@
 
 {% block scripts %}
 <script src="http://www.youtube.com/iframe_api"></script>
-<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='search.js') }}"></script>
+<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='host.js') }}"></script>
 {% endblock %}

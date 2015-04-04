@@ -50,16 +50,14 @@
                     <div class="panel-collapse collapse in" id="collapseFour">
                         <div class="list-group">
                         <% _.each(videos, function(video) { %>
-                            <a href="#">
-                            <li class="list-group-item media" id="<%= video.vid %>"> 
+                            <a href="#" class="list-group-item media searchResultEntry" id="<%= video.vid %>"> 
                                 <div class="col-md-4">
                                         <img class="img-responsive" src="<%= video.thumbnail %>">
                                 </div>
                                 <div class="col-md-8">
                                     <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
                                 </div>
-                            </li>
-                            </a>
+                            </a href="#">
                             <% }) %>
                         </div>
                     </div>

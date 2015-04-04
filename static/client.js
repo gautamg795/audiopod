@@ -9,15 +9,27 @@
  	subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
  });
 
- function queueVideo(vid)
+ function queueVideo(video_info)
  {
  	PUBNUB.publish({
  		channel: String(prefix + room_id),
- 		message: vid,
+ 		message: video_info,
  		error: function (error) {
       		// Handle error here
       		console.log(JSON.stringify(error));
   		}
 	});
-	console.log("Published video with id " + vid);
+	console.log(video_info);
+}
+
+function anchorSearchResults()
+{
+	$(".searchResultEntry").click(function(event) {
+		var v_id = event.target.closest(".searchResultEntry").id;
+		var video = _.findWhere(searchResults, {vid: v_id});
+		queueVideo(JSON.stringify(video));
+		$("#searchResults").children().fadeOut(500, function() { $(this).remove(); })
+		$("#searchText").val("")
+		/* show notification on screen */
+	});
 }
