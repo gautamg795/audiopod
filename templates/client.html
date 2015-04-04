@@ -91,7 +91,7 @@
 
 {% block scripts %}
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+<script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 
 <script src="{{ url_for('static', filename='client.js') }}"></script>
 <script src="{{ url_for('static', filename='search.js') }}"></script>
