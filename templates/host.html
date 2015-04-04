@@ -1,31 +1,52 @@
 {% extends "layout.html" %}
 {% block title %}MediaBox Host{% endblock %}
-{% block head %}<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>{% endblock %}
+{% block head %}<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+    <link href="style.css" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>header stuff</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="embed-responsive embed-responsive-16by9">
-                <div id="player" style="text-align: center">
+    <div class="jumbotron">
+        <h1>MediaBox</h1>
+
+        <div class="row">
+            <div class="col-md-12">
+              <div class="embed-responsive embed-responsive-16by9">
+                    <div id="player" style="text-align: center">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>queue stuff</h1>
+
+        <div class="row">
+            <div class="col-md-12" style="text-align: center">
+              <h4>Next Up:</h4>
+              <p>Money on My Mind</p>
+            </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-default" type="submit">
+            Add a song!</button>
+        </div>
+        <div class="col-md-10">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                <input type="text" class="form-control" id="song">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; DJGJ 2015</p>
+    </footer>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="https://www.youtube.com/iframe_api"></script>
+<script src="http://www.youtube.com/iframe_api"></script>
 <script src="{{ url_for('static', filename='host.js') }}"></script>
 {% endblock %}
