@@ -1,7 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}songbox host{% endblock %}
-{% block head %}<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
-    <link href="style.css" rel="stylesheet">
+{% block head %}
 {% endblock %}
 
 {% block body %}
@@ -12,7 +11,7 @@
             <h4>add your music to the mix: <a href="/client/{{ room_id }}">songbox.io/client/{{ room_id }}</a></h4>
         </div>
         <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
-            <h3><a href="songbox.io/client/{{ room_id }}">songbox.io/client/{{ room_id }}</a></h3>
+            <h3><a href="songbox.io/client/{{ room_id }}">songboxio/client/{{ room_id }}</a></h3>
         </div>
         <div class="clearfix"></div>
         <!-- Search bar -->
