@@ -38,7 +38,6 @@ function onSearchResponse(response){
 	for (idx = 0; idx < resArray.length; idx++)
 	{
 		var video = new Object();
-		video.num = idx;
 		video.vid = resArray[idx].id.videoId;
 		video.title = resArray[idx].snippet.title;
 		video.thumbnail = resArray[idx].snippet.thumbnails.medium.url;

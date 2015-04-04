@@ -11,7 +11,6 @@
 
  function queueVideo(vid)
  {
- 	console.log("param for queue video is " + vid);
  	PUBNUB.publish({
  		channel: String(prefix + room_id),
  		message: vid,
@@ -22,17 +21,3 @@
 	});
 	console.log("Published video with id " + vid);
 }
-
-
-
-// $(function(){
-// 	$(#video_0).click(function(){
-// 		console.log("button clicked worked");
-// 		var $this = $(this);
-// 		var v1 = $this.data('para1');
-// 		console.log("passing v1 to queueVideo");
-// 		queueVideo(v1);
-
-// 	});
-
-// });

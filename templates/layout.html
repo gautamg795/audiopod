@@ -9,10 +9,7 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
         <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-
-
         <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
-
         {% block head %} {% endblock %}
     </head>
     <body>
@@ -53,20 +50,16 @@
                     <div class="panel-collapse collapse in" id="collapseFour">
                         <div class="list-group">
                         <% _.each(videos, function(video) { %>
-
-                            <div class="hoverclass">
-                                <a href="#" id="video_<%= video.num %>" onClick="queueVideo('<%= video.vid %>')">
-                                <li class="list-group-item media" id="<%= video.vid %>"> 
-                                    <div class="col-md-4">
-                                            <img class="img-responsive" src="<%= video.thumbnail %>">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
-                                    </div>
-                                </li>
-                                </a>
-                            </div>
-
+                            <a href="#">
+                            <li class="list-group-item media" id="<%= video.vid %>"> 
+                                <div class="col-md-4">
+                                        <img class="img-responsive" src="<%= video.thumbnail %>">
+                                </div>
+                                <div class="col-md-8">
+                                    <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+                                </div>
+                            </li>
+                            </a>
                             <% }) %>
                         </div>
                     </div>

@@ -1,15 +1,8 @@
 
+
 .jumbotron {
 	padding-top: 10px;
   text-align: center;
-}
-.hoverclass .col-md-4:hover{
-  color:#bdc3c7;
-  background-color: #bdc3c7;
-}
-.hoverclass  .col-md-8:hover{
-  background-color:#bdc3c7;
-  
 }
 .footer {
   text-align: center;
