@@ -4,22 +4,26 @@
 
 {% block body %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>header stuff</h1>
-        </div>
+    <div class="jumbotron">
+        <h1>MediaBox</h1>
+        <p class="lead">Add a song!</p>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+            <input type="text" class="form-control" id="song">
+            </div>
+        </form>
     </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="embed-responsive embed-responsive-16by9">
+    <div class="row marketing">
+        <div class="col-md-6">
+          <div class="embed-responsive embed-responsive-16by9">
                 <div id="player" style="text-align: center">
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>queue stuff</h1>
+
+        <div class="col-md-6">
+          <h4>Next Up</h4>
+          <p>Money on My Mind</p>
         </div>
     </div>
 </div>
