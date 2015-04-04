@@ -19,6 +19,11 @@ function onClientLoad(){
 	gapi.client.load('youtube', 'v3', function(){
 		search = function () {
 				var query = $("#searchText").val();
+				if (query == "")
+				{
+			        $("#searchResults").children().fadeOut(500, function() { $(this).remove(); });
+			        return;
+				}
 				var request = gapi.client.youtube.search.list({
 					q: query, 
 					part: 'snippet',
