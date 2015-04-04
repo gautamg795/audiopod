@@ -1,8 +1,3 @@
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
@@ -16,10 +11,6 @@ body {
 
 .footer {
   text-align: center;
-}
-
-.row {
-	padding-bottom: 20px;
 }
 
 .search-results {
