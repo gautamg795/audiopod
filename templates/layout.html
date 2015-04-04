@@ -9,12 +9,15 @@
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 
+
         <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+
         {% block head %} {% endblock %}
     </head>
     <body>
         {% block body %}
         {% endblock %}
+        <script src="{{ url_for('static', filename="client.js") }}"> </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
@@ -50,16 +53,20 @@
                     <div class="panel-collapse collapse in" id="collapseFour">
                         <div class="list-group">
                         <% _.each(videos, function(video) { %>
-                            <a href="#">
-                            <li class="list-group-item media" id="<%= video.vid %>"> 
-                                <div class="col-md-4">
-                                    <img class="img-responsive" src="<%= video.thumbnail %>">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
-                                </div>
-                            </li>
-                            </a>
+
+                            <div class="hoverclass">
+                                <a href="#" id="video_<%= video.num %>" onClick="queueVideo('<%= video.vid %>')">
+                                <li class="list-group-item media" id="<%= video.vid %>"> 
+                                    <div class="col-md-4">
+                                            <img class="img-responsive" src="<%= video.thumbnail %>">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+                                    </div>
+                                </li>
+                                </a>
+                            </div>
+
                             <% }) %>
                         </div>
                     </div>
