@@ -3,6 +3,7 @@
  */
 
 var player;
+var videoQueue = [];
 
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
@@ -17,6 +18,7 @@ function onYouTubePlayerAPIReady() {
 
 // autoplay video
 function onPlayerReady(event) {
+    playNextVideo();
 }
 
 // when video ends
@@ -24,4 +26,13 @@ function onPlayerStateChange(event) {
     if(event.data === 0) {          
         alert('done');
     }
+}
+
+function playNextVideo()
+{
+    console.log("Playing next video");
+    if (videoQueue.length == 0)
+        return;
+    var id = videoQueue.shift();
+    player.loadVideoById(id);
 }
