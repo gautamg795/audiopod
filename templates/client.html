@@ -12,21 +12,18 @@
 
         <!-- Search bar -->
         <div class="row">
-            <div class="col-xs-2 hidden-md hidden-sm hidden-lg">
-                <button class="btn btn-default" type="submit" onClick="search();">Search</button>
-            </div>
-            <div class="col-md-2 col-sm-2 hidden-xs">
-                <button class="btn btn-default" type="submit" onClick="search();">Search</button>
-            </div>
-            <div class="col-md-10 col-sm-10 col-xs-10">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                    <input type="text" class="form-control" id="song">
-                    </div>
-                </form>
-            </div>
+                <div id="custom-search-input">
+	                <div class="input-group col-md-12">
+	                    <input type="text" class="form-control input-lg" placeholder="search for music" />
+	                    <span class="input-group-btn">
+	                        <button class="btn btn-info btn-lg" type="button">
+	                            <i class="glyphicon glyphicon-search"></i>
+	                        </button>
+	                    </span>
+	                </div>
+                </div>
         </div>
-
+<br />
         <!-- Other videos -->
         <div class="search-results">
             <div class="col-md-12" style="text-align: center">
