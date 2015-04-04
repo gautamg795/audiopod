@@ -7,7 +7,7 @@
     <div class="jumbotron">
     	<h1>songbox</h1>
     	<p>the social music player</p>
-    	
+
 		<div class="row">
 		    <div id="custom-url">
 		        <div class="input-group col-md-12">
@@ -32,4 +32,5 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='homepage.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
 {% endblock %}
