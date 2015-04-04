@@ -1,12 +1,33 @@
 {% extends "layout.html" %}
 {% block title %}MediaBox Client{% endblock %}
-{% block head %}<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>{% endblock %}
+{% block head %}<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+<!-- <script src="static/search.js"></script> -->
+{% endblock %}
 
 {% block body %}
-<h1> body stuff </h1>
+<pre id="response"></pre>
+<div class="container">
+	<div class="row">
+		<div class="col-sm-6">
+			<form>
+				<div class="form-group">
+					<label for="SongName">Song Name: </label>
+					<input type="text" id="songtext" placeholder="enter song name">
+				</div>
+			</form>
+		
+			<button class="btn btn-default" type="submit" onClick="search();">Search</button>
+		</div>
+	</div>
+</div>
+<input type="text" id="testtext" placeholder="Kappa">
 {% endblock %}
 
 {% block scripts %}
+
+<script src="https://apis.google.com/js/client.js?onload=onClientLoad" 
+		type="text/javascript"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <script src="{{ url_for('static', filename='client.js') }}"></script>
+<script src="{{ url_for('static', filename='search.js') }}"></script>
 {% endblock %}
