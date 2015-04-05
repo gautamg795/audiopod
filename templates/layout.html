@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
@@ -21,70 +20,66 @@
         <script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
         {% block scripts %}
         {% endblock %}
-
         <footer class="footer">
             <div class="container">
                 <div id="share-buttons">
-                <!-- Facebook -->
-                <a href="http://www.facebook.com/sharer.php?u=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
-                <!-- Twitter -->
-                <a href="http://twitter.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
-                <!-- Google+ -->
-                <a href="https://plus.google.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
-                <!-- Pinterest -->
-                <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><img src="http://www.simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" /></a>
+                    <!-- Facebook -->
+                    <a href="http://www.facebook.com/sharer.php?u=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" /></a>
+                    <!-- Twitter -->
+                    <a href="http://twitter.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" /></a>
+                    <!-- Google+ -->
+                    <a href="https://plus.google.com/share?url=http://songbox-app.herokuapp.com/" target="_blank"><img src="http://www.simplesharebuttons.com/images/somacro/google.png" alt="Google" /></a>
+                    <!-- Pinterest -->
+                    <a href="javascript:void((function()%7Bvar%20e=document.createElement('script');e.setAttribute('type','text/javascript');e.setAttribute('charset','UTF-8');e.setAttribute('src','http://assets.pinterest.com/js/pinmarklet.js?r='+Math.random()*99999999);document.body.appendChild(e)%7D)());"><img src="http://www.simplesharebuttons.com/images/somacro/pinterest.png" alt="Pinterest" /></a>
                 </div>
-
                 <p class="text-muted">Made with no sleep, by DJGJ @ LA Hacks 2K15</p>
             </div>
         </footer>
-
         <script type="text/template" id="searchResultsTemplate">
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a class="accordion-toggle" data-toggle="collapse" href="#collapseSearch">Search Results</a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse in" id="collapseSearch">
-                        <div class="list-group">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#collapseSearch">Search Results</a>
+                    </h4>
+                </div>
+                <div class="panel-collapse collapse in" id="collapseSearch">
+                    <div class="list-group">
                         <% _.each(videos, function(video) { %>
-                            <a href="#" class="list-group-item media searchResultEntry" id="<%= video.vid %>"> 
-                                <div class="col-md-4">
-                                        <img class="img-responsive" src="<%= video.thumbnail %>">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
-                                </div>
-                            </a href="#">
-                            <% }) %>
-                        </div>
+                        <a href="#" class="list-group-item media searchResultEntry" id="<%= video.vid %>">
+                            <div class="col-md-4">
+                                <img class="img-responsive" src="<%= video.thumbnail %>">
+                            </div>
+                            <div class="col-md-8">
+                                <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+                            </div>
+                        </a href="#">
+                        <% }) %>
                     </div>
                 </div>
             </div>
+        </div>
         </script>
         <script type="text/template" id="queueEntryTemplate">
-                <a href="#" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-1 col-xs-offset-11">
+        <a href="#" class="list-group-item media queueEntry" id="<%= video.vid %>-queue">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-1 col-xs-offset-11">
                         <button type="button" class="btn btn-primary btn-xs">
                         x
                         </button>
-                        </div>
-                    </div>
-                    <div class="row">
-                                    <div class="col-md-4">
-                                            <img class="img-responsive" src="<%= video.thumbnail %>">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
-                                    </div>
                     </div>
                 </div>
-                </a href="#">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-responsive" src="<%= video.thumbnail %>">
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+                    </div>
+                </div>
+            </div>
+        </a href="#">
         </script>
     </body>
 </html>
-

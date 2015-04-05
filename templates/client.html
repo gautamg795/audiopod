@@ -1,39 +1,35 @@
 {% extends "layout.html" %}
 {% block title %}songbox client{% endblock %}
 {% block head %}
-<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+	<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
-
 {% block body %}
-<div class="container">
-    <div class="jumbotron">
-        <h1>songbox</h1>
-        <p>the social music player</p>
-        <h4>you are currently sharing music to the room <em>{{ room_id }}</em></h4>
-        <!-- Search bar -->
-        <div class="row">
-                <div id="custom-search-input">
-	                <div class="input-group col-md-12">
-	                    <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
-	                    <span class="input-group-btn">
-	                        <button class="btn btn-info btn-lg" id="searchButton" type="button">
-	                            <i class="glyphicon glyphicon-search"></i>
-	                        </button>
-	                    </span>
-	                </div>
-                </div>
-        </div>
-<br />
-		<div class="row" id="searchResults"></div>
-        
-    </div>
-
-</div>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>songbox</h1>
+			<p>the social music player</p>
+			<h4>you are currently sharing music to the room <em>{{ room_id }}</em></h4>
+			<!-- Search bar -->
+			<div class="row">
+				<div id="custom-search-input">
+					<div class="input-group col-md-12">
+						<input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
+						<span class="input-group-btn">
+							<button class="btn btn-info btn-lg" id="searchButton" type="button">
+							<i class="glyphicon glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<br />
+			<div class="row" id="searchResults"></div>
+		</div>
+	</div>
 {% endblock %}
-
 {% block scripts %}
-<script defer src="https://www.youtube.com/iframe_api"></script>
-<script defer src="{{ url_for('static', filename='search.js') }}"></script>
-<script defer src="{{ url_for('static', filename='client.js') }}"></script>
-<script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+	<script defer src="https://www.youtube.com/iframe_api"></script>
+	<script defer src="{{ url_for('static', filename='search.js') }}"></script>
+	<script defer src="{{ url_for('static', filename='client.js') }}"></script>
+	<script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 {% endblock %}

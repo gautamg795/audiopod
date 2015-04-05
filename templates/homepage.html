@@ -1,48 +1,44 @@
 {% extends "layout.html" %}
 {% block title %}songbox{% endblock %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
 {% endblock %}
 {% block body %}
-<!-- Add url form -->
-<div class="container">
-    <div class="jumbotron">
-
-		<h1>songbox</h1>
-    	<p>the social music player</p>
-
-		<div class="row">
-		    <div id="custom-url">
-		        <div class="input-group col-md-12">
-		            <input type="text" id="urlText" class="form-control input-lg" placeholder="create a custom songbox" />
-		            <span class="input-group-btn">
-		                <button class="btn btn-info btn-lg" id="urlButton" type="submit">
-		                    Submit
-		                </button>
-		            </span>
-		        </div>
-		    </div>
+	<!-- Add url form -->
+	<div class="container">
+		<div class="jumbotron">
+			<h1>songbox</h1>
+			<p>the social music player</p>
+			<div class="row">
+				<div id="custom-url">
+					<div class="input-group col-md-12">
+						<input type="text" id="urlText" class="form-control input-lg" placeholder="create a custom songbox" />
+						<span class="input-group-btn">
+							<button class="btn btn-info btn-lg" id="urlButton" type="submit">
+							Submit
+							</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-12 hidden-xs">
+				<h4>or proceed to <a href="/{{ room_id }}/host">songbox.io/{{ room_id }}/host</a> to begin hosting a musical experience</h4>
+			</div>
+			<div class="col-xs-12 hidden-md hidden-sm hidden-lg">
+				<h3><a href="/{{ room_id }}/host">songbox.io/{{ room_id }}/host</a></h3>
+			</div>
 		</div>
-	    <div class="col-md-12 hidden-xs">
-	        <h4>or proceed to <a href="/{{ room_id }}/host">songbox.io/{{ room_id }}/host</a> to begin hosting a musical experience</h4>
-	    </div>
-	    <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
-	        <h3><a href="/{{ room_id }}/host">songbox.io/{{ room_id }}/host</a></h3>
-	    </div>
+		<div class="information">
+			<p><b>How it works:</b> </p>
+			<ol>
+				<li>Use the form above to host your own songbox playlist.</li>
+				<li>Invite friends to add their favorite songs to the songbox! Friends can immediately search for a song from any device and add it to the queue.</li>
+				<li>Listen and enjoy! Songs will play in order, and the host can remove a song at any time.</li>
+			</ol>
+			<br>
+		</div>
 	</div>
-
-	<div class="information">
-		<p><b>How it works:</b> </p> 
-		<ol>
-			<li>Use the form above to host your own songbox playlist.</li>
-			<li>Invite friends to add their favorite songs to the songbox! Friends can immediately search for a song from any device and add it to the queue.</li>
-			<li>Listen and enjoy! Songs will play in order, and the host can remove a song at any time.</li>
-		</ol>
-		<br>
-	</div>
-</div>
 {% endblock %}
-
 {% block scripts %}
-<script src="{{ url_for('static', filename='homepage.js') }}"></script>
+	<script src="{{ url_for('static', filename='homepage.js') }}"></script>
 {% endblock %}

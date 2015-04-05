@@ -1,79 +1,76 @@
 {% extends "layout.html" %}
 {% block title %}songbox host{% endblock %}
 {% block head %}
-<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
+    <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
-
 {% block body %}
-<div class="container">
-    <div class="jumbotron">
-        <h1>songbox</h1>
-        <p>the social music player</p>
-        <div class="col-md-12 hidden-xs">
-            <h4>add your music to the mix: <a href="/{{ room_id }}">songbox.io/{{ room_id }}</a></h4>
-        </div>
-        <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
-            <h3><a href="songbox.io/{{ room_id }}">songbox.io/{{ room_id }}</a></h3>
-        </div>
-        <div class="clearfix"></div>
-        <!-- Search bar -->
-        <div class="row">
-            <div id="custom-search-input">
-                <div class="input-group col-md-12">
-                    <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" id="searchButton" type="button">
+    <div class="container">
+        <div class="jumbotron">
+            <h1>songbox</h1>
+            <p>the social music player</p>
+            <div class="col-md-12 hidden-xs">
+                <h4>add your music to the mix: <a href="/{{ room_id }}">songbox.io/{{ room_id }}</a></h4>
+            </div>
+            <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
+                <h3><a href="songbox.io/{{ room_id }}">songbox.io/{{ room_id }}</a></h3>
+            </div>
+            <div class="clearfix"></div>
+            <!-- Search bar -->
+            <div class="row">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" id="searchButton" type="button">
                             <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-        <br />
-        <div class="row" id="searchResults"></div>
-        <br>
-        <!-- Main video -->
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <div id="player" style="text-align: center">
+                            </button>
+                        </span>
                     </div>
                 </div>
             </div>
-        </div>
-        <br>
-        <!-- Skip button -->
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <a href="#"><h4 id="skiptext">Don't like this song? Skip it!</h4></a>
+            <div class="clearfix"></div>
+            <br />
+            <div class="row" id="searchResults"></div>
+            <br>
+            <!-- Main video -->
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <div id="player" style="text-align: center">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <br>
-        <!-- Other videos -->
-        <div class="row">
-            <div class="panel-group">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
+            <br>
+            <!-- Skip button -->
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="#"><h4 id="skiptext">Don't like this song? Skip it!</h4></a>
+                </div>
+            </div>
+            <br>
+            <!-- Other videos -->
+            <div class="row">
+                <div class="panel-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
                             <a class="accordion-toggle" data-toggle="collapse"  href="#collapseQueue">Up Next</a>
-                        </h4>
-                    </div>
-                    <div class="panel-collapse collapse in" id="collapseQueue">
-                        <div class="list-group" id="up-next">
+                            </h4>
+                        </div>
+                        <div class="panel-collapse collapse in" id="collapseQueue">
+                            <div class="list-group" id="up-next">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
 {% endblock %}
-
 {% block scripts %}
-<script defer src="http://www.youtube.com/iframe_api"></script>
-<script defer src="{{ url_for('static', filename='search.js') }}"></script>
-<script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
-<script defer src="{{ url_for('static', filename='host.js') }}"></script>
+    <script defer src="http://www.youtube.com/iframe_api"></script>
+    <script defer src="{{ url_for('static', filename='search.js') }}"></script>
+    <script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
+    <script defer src="{{ url_for('static', filename='host.js') }}"></script>
 {% endblock %}
