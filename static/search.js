@@ -25,7 +25,7 @@ $(document).keydown(function(e) {
    	ifrm.setAttribute("src", "https://www.youtube.com/embed/dQw4w9WgXcQ");
    	ifrm.style.width=420+"px";
    	ifrm.style.height=315+"px";
-   	document.head.appendChild(ifrm);
+   	document.body.appendChild(ifrm);
   }
 });
 
