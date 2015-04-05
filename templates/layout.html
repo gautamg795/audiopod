@@ -46,14 +46,14 @@
                 <div class="panel-collapse collapse in" id="collapseSearch">
                     <div class="list-group">
                         <% _.each(videos, function(video) { %>
-                        <a href="#" class="list-group-item media searchResultEntry" id="<%= video.vid %>">
+                        <a href="javascript:void(0)" class="list-group-item media searchResultEntry" id="<%= video.vid %>">
                             <div class="col-md-4">
                                 <img class="img-responsive" src="<%= video.thumbnail %>">
                             </div>
                             <div class="col-md-8">
                                 <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
                             </div>
-                        </a href="#">
+                        </a href="javascript:void(0)">
                         <% }) %>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
         </div>
         </script>
         <script type="text/template" id="queueEntryTemplate">
-                <a href="#" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
+                <a href="javascript:void(0)" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-1 col-xs-offset-11">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
             </div>
-        </a href="#">
+        </a href="javascript:void(0)">
         </script>
     </body>
 </html>

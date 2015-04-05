@@ -71,9 +71,11 @@ function addToQueue(video_info)
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
     $(".deletebutton").click(function() {
         console.log("entered button");
-        var v_id = $(this).closest("queueEntry").id;
+        var v_id = $(this).closest(".queueEntry").attr('id');
         v_id = v_id.substr(0,v_id.length-6);
-        console.log(v_id);
+        videoQueue = _.without(videoQueue, _.findWhere(videoQueue, { vid : v_id}));
+        $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
+        updateQueueStatus();
     });
     videoQueue.push(video);
     /*
