@@ -91,7 +91,6 @@ function updateQueueStatus()
         $("#up-next").append(message);
 }
 
-
 function anchorSearchResults()
 {
     $(".searchResultEntry").click(function(event) {
