@@ -7,6 +7,8 @@ var player;
 var videoQueue = [];
 var prefix = "mediabox_";
 var queueTemplate;
+var index = 0;
+var skipMessages = [ "WORST song ever?? Skip it!", "Hate this song? Skip it!", "Did Gautam pick this song? Skip it!", "Don't like this song? Skip it!"];
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
 });
@@ -77,6 +79,10 @@ function skipVideo()
 {
     player.stopVideo(); // in case this is the last video in the queue
     playNextVideo();
+    if (index == skipMessages.length) 
+        index = 0;
+    $("#skiptext").hide().html(skipMessages[index]).fadeIn('slow');
+    index++;
 }
 
 function updateQueueStatus()
