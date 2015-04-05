@@ -1,7 +1,3 @@
-h1:before {
-  content: url(/static/musical-note-2-medium.png);
-}
-
 .jumbotron {
 	padding-top: 10px;
   text-align: center;
@@ -10,6 +6,8 @@ h1:before {
 #home {
   text-decoration: none;
   color: inherit;
+  font-family: "Century Gothic";
+  text-transform: uppercase;
 }
 
 #home:hover{
