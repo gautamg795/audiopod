@@ -1,12 +1,9 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
+  position: relative;
 }
-.container {
-  padding: 0 15px;
+
+.information {
+	font-size: large;
 }
