@@ -11,12 +11,12 @@ def hello_world():
     return render_template('homepage.html', room_id=get_url())
 
 
-@app.route('/<room_id>')
+@app.route('/<room_id>/')
 def client(room_id):
     return render_template('client.html', room_id=room_id)
 
 
-@app.route('/<room_id>/host')
+@app.route('/<room_id>/host/')
 def host(room_id):
     return render_template('host.html', room_id=room_id)
 
