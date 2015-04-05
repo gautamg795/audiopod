@@ -63,7 +63,6 @@ function addToQueue(video_info)
     console.log("Queueing video");
     var video = JSON.parse(video_info);
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
-    $("#up-next").append();
     videoQueue.push(video);
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
@@ -81,7 +80,7 @@ function skipVideo()
     playNextVideo();
     if (index == skipMessages.length) 
         index = 0;
-    $("#skiptext").hide().html(skipMessages[index]).fadeIn('slow');
+    $("#skiptext").fadeOut('slow', function() { $(this).html(skipMessages[index]); }).fadeIn('slow');
     index++;
 }
 
