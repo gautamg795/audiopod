@@ -8,7 +8,6 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-                    
                         <div class="thumbnail">
                             <img src="{{ qrcode("http://audiopod.com/" + room_id) }}" />
                             <div class="caption text-center">
@@ -16,7 +15,6 @@
                                 <p>share with friends to invite them to this audiopod!</p>
                             </div>
 
-                    
             </div>
              <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -52,9 +50,9 @@
             <div class="clearfix"></div>
             <br />
             <div class="row" id="searchResults"></div>
-            <br>
+            <br class="initialHide">
             <!-- Main video -->
-            <div class="row">
+            <div class="row initialHide">
                 <div class="col-md-8 col-md-offset-2">
                     <div class="embed-responsive embed-responsive-16by9">
                         <div id="player" style="text-align: center">
@@ -62,9 +60,9 @@
                     </div>
                 </div>
             </div>
-            <br>
+            <br class="initialHide">
             <!-- Skip button -->
-            <div class="row">
+            <div class="row initialHide">
                 <div class="col-md-12 text-center">
                     <a href="javascript:void(0)"><h4 id="skiptext">Don't like this song? Click here to skip it!</h4></a>
                 </div>

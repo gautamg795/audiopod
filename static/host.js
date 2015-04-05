@@ -4,6 +4,7 @@
  */
 
 var player;
+var initialized = false;
 var videoQueue = [];
 var prefix = "mediabox_";
 var queueTemplate;
@@ -12,6 +13,7 @@ var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here 
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
+    $(".initialHide").hide();
 });
 $("#skiptext").click(function() { skipVideo(); });
 
@@ -54,6 +56,11 @@ function onPlayerStateChange(event) {
 
 function playNextVideo()
 {
+    if (! initialized)
+    {
+        initialized = true;
+        $(".initialHide").show();
+    }
     console.log("Playing next video");
     if (videoQueue.length == 0) {
         console.log("Video queue was empty");
