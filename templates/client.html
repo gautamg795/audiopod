@@ -10,25 +10,81 @@
         <h1>songbox</h1>
         <p>the social music player</p>
 
-        <div class="col-md-12 hidden-xs">
-            <h4>you are now adding to the {{ room_id }} playlist!</h4>
-        </div>
-
         <!-- Search bar -->
         <div class="row">
                 <div id="custom-search-input">
-                    <div class="input-group col-md-12">
-                        <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music"/>
-                        <span class="input-group-btn">
-                            <button class="btn btn-info btn-lg" id="searchButton" type="button">
-                                <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                        </span>
-                    </div>
+	                <div class="input-group col-md-12">
+	                    <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
+	                    <span class="input-group-btn">
+	                        <button class="btn btn-info btn-lg" id="searchButton" type="button">
+	                            <i class="glyphicon glyphicon-search"></i>
+	                        </button>
+	                    </span>
+	                </div>
                 </div>
         </div>
-        <br />
+<br />
+		<div class="row" id="searchResults"></div>
+        <!-- Other videos -->
+        <div class="next-up">
+            <div class="col-md-12" style="text-align: center">
+                <h4>Next Up:</h4>        
+            </div>
+            <div class="row">
+                <div class="col-md-1 col-xs-2">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
+                </div>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 col-xs-2">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
+                </div>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 col-xs-2">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
+                </div>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 col-xs-2">
+                    <button type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </div>
+                <div class="col-md-4 col-xs-3">
+                    <h4> Thumbnail</h4>
+                </div>
+                <div class="col-md-7 col-xs-6">
+                    <h4> Info</h4>
+                </div>
+            </div>
+        </div>
     </div>
+
 </div>
 {% endblock %}
 
