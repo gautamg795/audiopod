@@ -66,12 +66,23 @@
         </script>
         <script type="text/template" id="queueEntryTemplate">
                 <a href="#" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
-                                <div class="col-md-4">
-                                        <img class="img-responsive" src="<%= video.thumbnail %>">
-                                </div>
-                                <div class="col-md-8">
-                                    <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
-                                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-1 col-xs-offset-11">
+                        <button type="button" class="btn btn-primary btn-xs" >
+                        x
+                        </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                                    <div class="col-md-4">
+                                            <img class="img-responsive" src="<%= video.thumbnail %>">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+                                    </div>
+                    </div>
+                </div>
                 </a href="#">
         </script>
     </body>
