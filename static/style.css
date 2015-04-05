@@ -109,3 +109,7 @@ body {
 #custom-search-input .glyphicon-search{
     font-size: 23px;
 }
+
+.lead, .information{
+  color:#ecf0f1;
+}
