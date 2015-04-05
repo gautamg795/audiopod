@@ -68,15 +68,6 @@
         </script>
         <script type="text/template" id="queueEntryTemplate">
                 <a href="javascript:void(0)" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-1 col-xs-offset-11 text-right">
-                            <button type="button" class="btn btn-primary btn-xs deletebutton">
-                            <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-md-4">
                         <img class="img-responsive" src="<%= video.thumbnail %>">
@@ -85,6 +76,19 @@
                         <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-4 text-center">
+                        <button type="button" class="btn btn-primary deletebutton">
+                            <span>Remove</span>
+                            </button>
+                            <button type="button" class="btn btn-primary nextbutton">
+                            <span>Play Next</span>
+                            </button>
+                            <button type="button" class="btn btn-primary nowbutton">
+                            <span>Play Now</span>
+                            </button>
+                        </div>
+                    </div>
             </div>
         </a href="javascript:void(0)">
         </script>

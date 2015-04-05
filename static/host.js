@@ -69,14 +69,9 @@ function addToQueue(video_info)
     console.log("Queueing video");
     var video = JSON.parse(video_info);
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
-    $(".deletebutton").click(function() {
-        console.log("entered button");
-        var v_id = $(this).closest(".queueEntry").attr('id');
-        v_id = v_id.substr(0,v_id.length-6);
-        videoQueue = _.without(videoQueue, _.findWhere(videoQueue, { vid : v_id}));
-        $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
-        updateQueueStatus();
-    });
+    $(".deletebutton").click(deleteFromQueue);
+    $(".nextbutton").click(moveToFront);
+    $(".nowbutton").click(playNow);
     videoQueue.push(video);
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
@@ -121,4 +116,36 @@ function anchorSearchResults()
         $("#searchText").val("")
         /* show notification on screen */
     });
+}
+
+function deleteFromQueue()
+{
+    var v_id = $(this).closest(".queueEntry").attr('id');
+    v_id = v_id.substr(0,v_id.length-6);
+    videoQueue = _.without(videoQueue, _.findWhere(videoQueue, { vid : v_id}));
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
+    updateQueueStatus();
+}
+
+function moveToFront()
+{
+    var v_id = $(this).closest(".queueEntry").attr('id');
+    v_id = v_id.substr(0,v_id.length-6);
+    var video = _.findWhere(videoQueue, { vid : v_id});
+    videoQueue = _.without(videoQueue, video);
+    videoQueue.unshift(video);
+    var el = $(this).closest(".queueEntry").clone(true);
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); }).delay(500);
+    el.hide().prependTo("#up-next").fadeIn('slow');
+}
+
+function playNow()
+{
+    var v_id = $(this).closest(".queueEntry").attr('id');
+    v_id = v_id.substr(0,v_id.length-6);
+    var video = _.findWhere(videoQueue, { vid : v_id});
+    videoQueue = _.without(videoQueue, video);
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
+    updateQueueStatus();
+    player.loadVideoById(video.vid);
 }
