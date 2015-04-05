@@ -6,10 +6,10 @@
 {% block body %}
     <div class="container">
         <div class="jumbotron">
-            <h1><a href='/' id="home">audiopod</a></h1>
+            <h1><a href="/" id="home">audiopod&#9835;</a></h1>
             <p>the social music player</p>
             <div class="col-md-12 hidden-xs">
-                <h4>share with friends for great fun: <code><a href="/{{ room_id }}">audiopod.me/{{ room_id }}</a></code></h4>
+                <h4>share with friends for great fun: <code>audiopod.me/{{ room_id }}</code></h4>
             </div>
             <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
                 <h3><a href="audiopod.me/{{ room_id }}">audiopod.me/{{ room_id }}</a></h3>
@@ -19,7 +19,7 @@
             <div class="row">
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
+                        <input type="text" id="searchText" class="form-control input-lg" placeholder="search for music from YouTube"/>
                         <span class="input-group-btn">
                             <button class="btn btn-info btn-lg" id="searchButton" type="button">
                             <i class="glyphicon glyphicon-search"></i>
@@ -45,7 +45,7 @@
             <!-- Skip button -->
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <a href="javascript:void(0)"><h4 id="skiptext">Don't like this song? Skip it!</h4></a>
+                    <a href="javascript:void(0)"><h4 id="skiptext">Don't like this song? Click here to skip it!</h4></a>
                 </div>
             </div>
             <br>
@@ -69,8 +69,8 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script defer src="http://www.youtube.com/iframe_api"></script>
-    <script defer src="{{ url_for('static', filename='search.js') }}"></script>
-    <script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
     <script defer src="{{ url_for('static', filename='host.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='search.js') }}"></script>
+    <script defer src="http://www.youtube.com/iframe_api"></script>
+    <script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
 {% endblock %}
