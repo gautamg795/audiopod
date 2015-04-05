@@ -12,7 +12,7 @@ var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Skip it!", 
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
 });
-$("#skipButton").click(function() { skipVideo(); });
+$("#skiptext").click(function() { skipVideo(); });
 
 var PUBNUB = PUBNUB.init({
         subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
