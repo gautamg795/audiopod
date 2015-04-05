@@ -2,7 +2,8 @@ import random
 from flask import Flask
 from flask import render_template
 app = Flask(__name__)
-app.debug = True
+# app.debug = True
+app.config['SERVER_NAME'] = 'audiopod.me'
 
 
 @app.route('/')
