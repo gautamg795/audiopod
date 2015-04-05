@@ -11,7 +11,6 @@ var index = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Skip it!", "Hate this song? Skip it!", "Did Gautam pick this song? Skip it!", "Don't like this song? Skip it!"];
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
-    removefromQueue();
 });
 $("#skiptext").click(function() { skipVideo(); });
 
@@ -64,6 +63,12 @@ function addToQueue(video_info)
     console.log("Queueing video");
     var video = JSON.parse(video_info);
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
+    $(".deletebutton").click(function() {
+        console.log("entered button");
+        var v_id = $(this).closest("queueEntry").id;
+        v_id = v_id.substr(0,v_id.length-6);
+        console.log(v_id);
+    });
     videoQueue.push(video);
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
@@ -107,14 +112,5 @@ function anchorSearchResults()
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
         $("#searchText").val("")
         /* show notification on screen */
-    });
-}
-
-function removeFromQueue()
-{
-    $(".delete_button").click(function(event) {
-        var v_id = $(this).closest("queueEntry").id;
-        v_id = v_id.substr(0,v_id.length-6);
-        console.log(v_id);
     });
 }
