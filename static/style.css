@@ -1,6 +1,20 @@
+h1:before {
+  content: url(/static/musical-note-2-medium.png);
+}
+
 .jumbotron {
 	padding-top: 10px;
   text-align: center;
+}
+
+#home {
+  text-decoration: none;
+  color: inherit;
+}
+
+#home:hover{
+  text-decoration:none;
+  color: inherit;
 }
 
 .footer {

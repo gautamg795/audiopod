@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}songbox client{% endblock %}
+{% block title %}audiopod client{% endblock %}
 {% block head %}
 	<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
 {% block body %}
 	<div class="container">
 		<div class="jumbotron">
-			<h1>songbox</h1>
+			<h1><a href='/' id="home">audiopod</a></h1>
 			<p>the social music player</p>
 			<h4>you are currently sharing music to the room <em>{{ room_id }}</em></h4>
 			<!-- Search bar -->
