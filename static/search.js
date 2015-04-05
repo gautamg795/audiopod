@@ -21,7 +21,11 @@ $(document).keydown(function(e) {
   kkeys.push( e.keyCode );
   if ( kkeys.toString().indexOf( konami ) >= 0 ){
     $(document).unbind('keydown',arguments.callee);
-   	
+   	ifrm = document.createElement("IFRAME");
+   	ifrm.setAttribute("src", "https://www.youtube.com/embed/dQw4w9WgXcQ");
+   	ifrm.style.width=420+"px";
+   	ifrm.style.height=315+"px";
+   	document.head.appendChild(ifrm);
   }
 });
 
