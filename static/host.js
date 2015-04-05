@@ -100,7 +100,7 @@ function skipVideo()
 
 function updateQueueStatus()
 {
-    var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search a song, or send your friends to audiopod.me/client/" + room_id +"</div>"
+    var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/client/" + room_id +"</div>"
     if ($("#queueEmpty").length)
     {
         if (videoQueue.length != 0)
