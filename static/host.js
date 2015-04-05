@@ -8,7 +8,7 @@ var videoQueue = [];
 var prefix = "mediabox_";
 var queueTemplate;
 var index = 0;
-var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Skip it!", "Hate this song? Skip it!", "Did Gautam pick this song? Skip it!", "Don't like this song? Skip it!"];
+var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Did Gautam pick this song? Click here to skip it!", "Don't like this song? Click here to skip it!"];
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
 });
