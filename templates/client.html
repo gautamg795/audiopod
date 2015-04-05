@@ -4,16 +4,16 @@
 	<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
 {% block body %}
-	<div class="container">
-		<div class="jumbotron">
-			<h1><a href="/" id="home">audiopod&#9835;</a></h1>
+	<div class="container" >
+		<div class="jumbotron" style="padding-bottom: 10px">
+			<h1 id="logo"><a href="/" id="home">audiopod&#9835;</a></h1>
 			<p>the social music player</p>
 			<h4>you are currently sharing music to the pod <em>{{ room_id }}</em></h4>
 			<!-- Search bar -->
 			<div class="row">
 				<div id="custom-search-input">
 					<div class="input-group col-md-12">
-						<input type="text" id="searchText" class="form-control input-lg" placeholder="search for music" />
+						<input type="text" id="searchText" class="form-control input-lg" placeholder="search for music from YouTube" />
 						<span class="input-group-btn">
 							<button class="btn btn-info btn-lg" id="searchButton" type="button">
 							<i class="glyphicon glyphicon-search"></i>
@@ -24,6 +24,11 @@
 			</div>
 			<br />
 			<div class="row" id="searchResults"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<p>Use the form above to search for music on YouTube, and click on a video to add it to the queue!</p>
+			</div>
 		</div>
 	</div>
 {% endblock %}

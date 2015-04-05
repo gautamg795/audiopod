@@ -31,6 +31,10 @@
 .img-responsive {
   margin: 0 auto;
 }
+
+#logo {
+  margin-bottom: -5px;
+}
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
