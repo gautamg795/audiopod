@@ -4,12 +4,33 @@
     <script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
 {% block body %}
+    <div class="modal fade" id="qrModal" tabindex="-1" role="dialog" aria-labelledby="qrModal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+                    
+                        <div class="thumbnail">
+                            <img src="{{ qrcode("http://audiopod.com/" + room_id) }}" />
+                            <div class="caption text-center">
+                                <h4>http://audiopod.com/{{room_id}}</h4>
+                                <p>share with friends to invite them to this audiopod!</p>
+                            </div>
+
+                    
+            </div>
+             <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="container">
         <div class="jumbotron">
             <h1 id="logo"><a href="/" id="home">audiopod&#9835;</a></h1>
             <p>a social media player</p>
             <div class="col-md-12 hidden-xs">
-                <h4>share with friends for great fun: <code>audiopod.me/{{ room_id }}</code></h4>
+                <h4>share with friends for great fun: <a href="javascript:void(0)" data-toggle="modal" data-target="#qrModal"><code data-toggle="tooltip" data-placement="right" title="Click for QR code!">audiopod.me/{{ room_id }}</code></a></h4>
             </div>
             <div class="col-xs-12 hidden-md hidden-sm hidden-lg">
                 <h3><a href="audiopod.me/{{ room_id }}">audiopod.me/{{ room_id }}</a></h3>

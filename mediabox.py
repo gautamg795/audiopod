@@ -1,9 +1,11 @@
 import random
 from flask import Flask
 from flask import render_template
+from flask.ext.qrcode import QRcode
 app = Flask(__name__)
 # app.debug = True
 # app.config['SERVER_NAME'] = 'audiopod.me'
+QRcode(app)
 
 
 @app.route('/')
