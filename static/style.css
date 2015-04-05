@@ -7,6 +7,10 @@ h1:before {
   text-align: center;
 }
 
+.jumbotron .h1 {
+  text-decoration: none;
+}
+
 .footer {
   text-align: center;
 }
