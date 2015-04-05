@@ -100,7 +100,7 @@ function updateQueueStatus()
 function anchorSearchResults()
 {
     $(".searchResultEntry").click(function(event) {
-        var v_id = event.target.closest(".searchResultEntry").id;
+        var v_id = event.currentTarget.id;
         var video = _.findWhere(searchResults, {vid: v_id});
         addToQueue(JSON.stringify(video));
         $("#collapseSearch").collapse();
