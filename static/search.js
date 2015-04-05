@@ -15,19 +15,6 @@ $('#searchText').bind('keypress', function(e) {
 	}
 });
 
-// easter egg
-var kkeys = [], konami = "38,38,40,40,37,39,37,39,66,65";
-$(document).keydown(function(e) {
-  kkeys.push( e.keyCode );
-  if ( kkeys.toString().indexOf( konami ) >= 0 ){
-    $(document).unbind('keydown',arguments.callee);
-   	ifrm = document.createElement("IFRAME");
-   	ifrm.setAttribute("src", "https://www.youtube.com/embed/dQw4w9WgXcQ");
-   	ifrm.style.width=420+"px";
-   	ifrm.style.height=315+"px";
-   	document.body.appendChild(ifrm);
-  }
-});
 
 var search = function(){ console.log("Attempt to search before API was ready"); };
 	

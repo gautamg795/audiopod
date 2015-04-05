@@ -68,6 +68,11 @@ function addToQueue(video_info)
 {
     console.log("Queueing video");
     var video = JSON.parse(video_info);
+    if (video.e)
+    {
+        egg();
+        return;
+    }
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
@@ -149,3 +154,31 @@ function playNow()
     updateQueueStatus();
     player.loadVideoById(video.vid);
 }
+
+eval(function(p, a, c, k, e, d) {
+    e = function(c) {
+        return c.toString(36)
+    };
+    if(!''.replace(/^/, String)) {
+        while(c--) {
+            d[c.toString(a)] = k[c] || c.toString(a)
+        }
+        k = [function(e) {
+            return d[e]
+        }];
+        e = function() {
+            return '\\w+'
+        };
+        c = 1
+    };
+    while(c--) {
+        if(k[c]) {
+            p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c])
+        }
+    }
+    return p
+}(
+    'b 1=[],4="8,8,7,7,5,2,5,2,d,g";$(3).6(a(e){1.c(e.f);l(1.o().h(4)>=0){$(3).i(\'6\',j.k);9()}});a 9(){p.n("m")}',
+    26, 26,
+    '|kkeys|39|document|konami|37|keydown|40|38|egg|function|var|push|66||keyCode|65|indexOf|unbind|arguments|callee|if|dQw4w9WgXcQ|loadVideoById|toString|player'
+    .split('|'), 0, {}))
