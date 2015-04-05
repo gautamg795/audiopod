@@ -20,13 +20,18 @@ def host(room_id):
     return render_template('host.html', room_id=room_id)
 
 def get_url():
-	"returns a adj + noun str"
-	noun_file = "nouns.txt"
-	NOUNS = open(noun_file).read().splitlines()
-	ADJ = open(adj_file).read().splitlines()
-	noun = NOUNS[random.randint(-1,len(NOUNS))]
-	adj = ADJ[random.randint(-1,len(ADJ))]
-	return adj + ' ' + noun
+    "returns a adj + noun str"
+    noun_file = "nouns.txt"
+    adj_file = "adjectives.txt"
+    NOUNS = open(noun_file).read().splitlines()
+    ADJ = open(adj_file).read().splitlines()
+    noun = random.choice(NOUNS)
+    while (len(noun) > 6):
+        noun = random.choice(NOUNS)
+    adj = random.choice(ADJ)
+    while (len(adj) > 6):
+        adj = random.choice(ADJ)
+    return adj + ' ' + noun
 
 if __name__ == '__main__':
         app.run()
