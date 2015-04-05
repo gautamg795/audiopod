@@ -7,7 +7,7 @@ app.debug = True
 
 @app.route('/')
 def hello_world():
-    return render_template('homepage.html')
+    return render_template('homepage.html', room_id=get_url())
 
 
 @app.route('/client/<room_id>')
@@ -31,7 +31,7 @@ def get_url():
     adj = random.choice(ADJ)
     while (len(adj) > 6):
         adj = random.choice(ADJ)
-    return adj + ' ' + noun
+    return adj + "-" + noun
 
 if __name__ == '__main__':
         app.run()
