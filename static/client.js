@@ -25,7 +25,7 @@
 function anchorSearchResults()
 {
 	$(".searchResultEntry").click(function(event) {
-		var v_id = event.target.closest(".searchResultEntry").id;
+		var v_id = event.currentTarget.id;
 		var video = _.findWhere(searchResults, {vid: v_id});
 		queueVideo(JSON.stringify(video));
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
