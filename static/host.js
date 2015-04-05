@@ -73,6 +73,7 @@ function addToQueue(video_info)
         egg();
         return;
     }
+    notify(video.title);
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
@@ -153,6 +154,17 @@ function playNow()
     $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
     updateQueueStatus();
     player.loadVideoById(video.vid);
+}
+
+function notify(t)
+{
+    console.log(t);
+    new PNotify({
+        title: 'Video Added',
+        text: ("" + t),
+        type: 'info',
+        delay: 1500
+    });
 }
 
 eval(function(p, a, c, k, e, d) {

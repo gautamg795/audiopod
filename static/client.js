@@ -22,12 +22,24 @@
 	console.log(video_info);
 }
 
+function notify(t)
+{
+	console.log(t);
+	new PNotify({
+		title: 'Success',
+		text: ('"' + t + '" queued'),
+		type: 'info',
+		delay: 1500
+	});
+}
+
 function anchorSearchResults()
 {
 	$(".searchResultEntry").click(function(event) {
 		var v_id = event.currentTarget.id;
 		var video = _.findWhere(searchResults, {vid: v_id});
 		queueVideo(JSON.stringify(video));
+		notify(video.title);
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
 		$("#searchText").val("")
 		/* show notification on screen */
