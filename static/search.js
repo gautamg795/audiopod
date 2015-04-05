@@ -2,7 +2,10 @@
  * search.js
  * handles searching and stores results in searchResults var
  */
-
+var compiledTemplate;
+$(document).ready(function() {
+    compiledTemplate = _.template($("#searchResultsTemplate").html());
+});
 var searchResults = [];
 $("#searchButton").click(function() { search(); });
 $('#searchText').bind('keypress', function(e) {
@@ -57,10 +60,10 @@ function onSearchResponse(response){
 		$(result).hide().appendTo("#searchResults").fadeIn(1000);
 		return;
 	}
-	var compiledTemplate = _.template($("#searchResultsTemplate").html());
 	var context = {videos : searchResults};
 	$("#searchResults").empty();
 	var result = compiledTemplate(context);
+	$("#collapseSearch").collapse();
 	$(result).hide().appendTo("#searchResults").fadeIn(1000);
 	anchorSearchResults();
 }

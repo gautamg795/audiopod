@@ -6,7 +6,10 @@
 var player;
 var videoQueue = [];
 var prefix = "mediabox_";
-
+var queueTemplate;
+$(document).ready(function() {
+    queueTemplate = _.template($("#queueEntryTemplate").html());
+});
 $("#skipButton").click(function() { skipVideo(); });
 
 var PUBNUB = PUBNUB.init({
@@ -29,6 +32,7 @@ function onYouTubePlayerAPIReady() {
             'onStateChange': onPlayerStateChange
         }
     });
+    updateQueueStatus();
 }
 
 
@@ -47,19 +51,26 @@ function playNextVideo()
         return;
     }
     var video = videoQueue.shift();
+    $("#" + video.vid + "-queue").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
+    updateQueueStatus();
     player.loadVideoById(video.vid);
 }
 
 function addToQueue(video_info)
 {
     console.log("Queueing video");
-    videoQueue.push(JSON.parse(video_info));
+    var video = JSON.parse(video_info);
+    $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
+    $("#up-next").append();
+    videoQueue.push(video);
     /*
      * TODO: Update the HTML on the page to add it to the "up next"
      */
+    
     var state = player.getPlayerState();
     if (videoQueue.length == 1 && (state == -1 || state == 5 || state == 0 ))
         playNextVideo();
+    updateQueueStatus();
 }
 
 function skipVideo()
@@ -68,7 +79,17 @@ function skipVideo()
     playNextVideo();
 }
 
-
+function updateQueueStatus()
+{
+    var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search a song, or send your friends to songbox.io/client/" + room_id +"</div>"
+    if ($("#queueEmpty").length)
+    {
+        if (videoQueue.length != 0)
+            $("#queueEmpty").remove();
+    }
+    else if (videoQueue.length == 0)
+        $("#up-next").append(message);
+}
 
 
 function anchorSearchResults()
@@ -77,7 +98,8 @@ function anchorSearchResults()
         var v_id = event.target.closest(".searchResultEntry").id;
         var video = _.findWhere(searchResults, {vid: v_id});
         addToQueue(JSON.stringify(video));
-        $("#searchResults").children().fadeOut(500, function() { $(this).remove(); })
+        $("#collapseSearch").collapse();
+        $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
         $("#searchText").val("")
         /* show notification on screen */
     });
