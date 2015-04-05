@@ -9,7 +9,7 @@ var videoQueue = [];
 var prefix = "mediabox_";
 var queueTemplate;
 var index = 0;
-var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Did Gautam pick this song? Click here to skip it!", "Don't like this song? Click here to skip it!"];
+var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
@@ -18,7 +18,7 @@ $(document).ready(function() {
 $("#skiptext").click(function() { skipVideo(); });
 
 var PUBNUB = PUBNUB.init({
-        subscribe_key: 'sub-c-28a59964-da96-11e4-81e6-0619f8945a4f'
+        subscribe_key: 'sub-c-a3abf0ce-dbcf-11e4-bb6f-0619f8945a4f'
     });
 PUBNUB.subscribe({
     channel: prefix + room_id,

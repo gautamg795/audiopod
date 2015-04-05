@@ -86,7 +86,7 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script defer src="{{ url_for('static', filename='host.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='host.js', v=1) }}"></script>
     <script defer src="{{ url_for('static', filename='search.js') }}"></script>
     <script defer src="http://www.youtube.com/iframe_api"></script>
     <script defer src="https://apis.google.com/js/client.js?onload=onClientLoad" type="text/javascript"></script>
