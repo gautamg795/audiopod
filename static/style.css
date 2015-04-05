@@ -7,12 +7,14 @@ h1:before {
   text-align: center;
 }
 
-.jumbotron .h1 {
+
+
+.jumbotron #home {
   text-decoration: none;
   color: #333;
 }
 
-.jumbotron .h1:hover{
+.jumbotron #home:hover{
   text-decoration:none;
   color: #333;
 }
