@@ -108,3 +108,12 @@ function anchorSearchResults()
         /* show notification on screen */
     });
 }
+
+function removeFromQueue()
+{
+    $(".delete_button").click(function(event) {
+        var v_id = $(this).closest("queueEntry").id;
+        v_id = v_id.substr(0,v_id.length-6);
+        console.log(v_id);
+    });
+}
