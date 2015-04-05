@@ -31,12 +31,18 @@ function onYouTubePlayerAPIReady() {
         height: '390',
         width: '640',
         events: {
+            'onError': onVideoError,
             'onStateChange': onPlayerStateChange
         }
     });
     updateQueueStatus();
 }
 
+function onVideoError(event) {
+    console.log("Error");
+    player.stopVideo(); // in case this is the last video in the queue
+    playNextVideo();
+}
 
 // when video ends
 function onPlayerStateChange(event) {        
