@@ -1,3 +1,7 @@
+h1:before {
+  content: url(/static/musical-note-2-medium.png);
+}
+
 .jumbotron {
 	padding-top: 10px;
   text-align: center;
