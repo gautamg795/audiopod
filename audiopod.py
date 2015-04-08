@@ -17,6 +17,10 @@ def hello_world():
 def client(room_id):
     return render_template('client.html', room_id=room_id)
 
+@app.route('/<room_id>/<youtube_id>')
+def quickadd(room_id, youtube_id):
+    return render_template('quickadd.html', room_id=room_id, youtube_id=youtube_id)
+
 
 @app.route('/<room_id>/host/')
 def host(room_id):
