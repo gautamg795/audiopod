@@ -1,0 +1,16 @@
+{
+  "name": "audiopod-faye",
+  "version": "1.0.0",
+  "description": "manages the faye server for audiopod",
+  "main": "app.js",
+  "dependencies": {
+    "faye": "^1.1.1",
+    "http": "^0.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gautam Gupta",
+  "license": "Copyright (c) 2015"
+}
