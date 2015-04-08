@@ -6,29 +6,23 @@
 var player;
 var initialized = false;
 var videoQueue = [];
-var prefix = "mediabox_";
 var queueTemplate;
 var index = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
+
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
     $(".initialHide").hide();
 });
+
 $("#skiptext").click(function() { skipVideo(); });
 
-var PUBNUB = PUBNUB.init({
-        subscribe_key: 'sub-c-a3abf0ce-dbcf-11e4-bb6f-0619f8945a4f'
-    });
-PUBNUB.subscribe({
-    channel: prefix + room_id,
-    message: function(video_info){ addToQueue(video_info); },
-    error: function (error) {
-      // Handle error here
-      console.log(JSON.stringify(error));
-    }
-})
-console.log("Listening for messages from pubnub in channel " + prefix + room_id);
+var fayeClient = new Faye.Client('http://faye.audiopod.me');
+var subscription = fayeClient.subscribe('/' + String(room_id), function(video_info) { console.log(video_info); addToQueue(video_info); });
+console.log("Listening for messages from faye in channel /" + room_id);
+
+
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
