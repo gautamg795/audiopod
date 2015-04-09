@@ -26,6 +26,12 @@
     <body>
         {% block body %}
         {% endblock %}
+        <footer class="footer">
+            <div class="container">
+                <div class="fb-like" data-href="http://audiopod.me" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                <p class="text-muted">Made with no sleep by DJGJ @ LA Hacks 2015</p>
+            </div>
+        </footer>
         <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
         <div id="fb-root"></div>
@@ -42,14 +48,6 @@
         <script src="{{ url_for('static', filename='faye-browser-min.js')}}"></script>
         {% block scripts %}
         {% endblock %}
-        <footer class="footer">
-            <div class="container">
-         
-                <div class="fb-like" data-href="http://audiopod.me" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
-                <p class="text-muted">Made with no sleep by DJGJ @ LA Hacks 2015</p>
-
-            </div>
-        </footer>
         <script type="text/template" id="searchResultsTemplate">
         <div class="panel-group">
             <div class="panel panel-default">
