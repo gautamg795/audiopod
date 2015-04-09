@@ -16,8 +16,9 @@ $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
     $(".initialHide").hide();
+    $("#ios").children().hide();
     if (iOS) {
-        $("#ios").show();
+        $("#ios").children().show();
         $("#ios").click(function() { if (iOSvid != "") player.loadVideoById(iOSvid); });
     }
 });
