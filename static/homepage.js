@@ -13,7 +13,10 @@
 
 function goToRoom()
 {
-	var url = $("#urlText").val() || room_id;
+	var url = $("#urlText").val();
+	if (url == "static")
+		url = room_id;
+	url = url || room_id;
 	url = url.trim().replace(/\s+/g, '-').replace(/[^\w-]/g,'').replace(/-+/g, '-').replace(/^-+/g,'').replace(/-+$/g,'').substr(0, 32) || room_id;
 	document.location.href = "/" + url + "/host";
 }
