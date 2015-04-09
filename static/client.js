@@ -9,6 +9,21 @@
  	subscribe_key: 'sub-c-a3abf0ce-dbcf-11e4-bb6f-0619f8945a4f'
  });
 
+ $(document).load(function(){
+    if (youtube_id != null)
+    {
+
+        queueVideo(youtube_id);
+        notify(youtube_id);
+        window.setTimeout(
+            // waits 3 seconds and then goes to client page
+            function(){
+                window.location.href='audiopid.me/room_id';
+            }, 3000);
+        
+    }
+});
+
  function queueVideo(video_info)
  {
  	PUBNUB.publish({
