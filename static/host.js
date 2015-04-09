@@ -4,6 +4,8 @@
  */
 
 var player;
+var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+var iOSvid = "";
 var initialized = false;
 var videoQueue = [];
 var queueTemplate;
@@ -14,10 +16,13 @@ $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
     $(".initialHide").hide();
+    if (iOS) {
+        $("#ios").show();
+        $("#ios").click(function() { if (iOSvid != "") player.loadVideoById(iOSvid); });
+    }
 });
 
 $("#skiptext").click(function() { skipVideo(); });
-
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
 var subscription = fayeClient.subscribe('/' + String(room_id), function(video_info) { console.log(video_info); addToQueue(video_info); });
 console.log("Listening for messages from faye in channel /" + room_id);
@@ -63,6 +68,7 @@ function playNextVideo()
     var video = videoQueue.shift();
     $("#" + video.vid + "-queue").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
     updateQueueStatus();
+    iOSvid = video.vid;
     player.loadVideoById(video.vid);
 }
 
