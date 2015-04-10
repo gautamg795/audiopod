@@ -4,8 +4,7 @@
   "description": "manages the faye server for audiopod",
   "main": "app.js",
   "dependencies": {
-    "faye": "^1.1.1",
-    "http": "^0.0.0"
+    "faye": "^1.1.1"
   },
   "devDependencies": {},
   "scripts": {
