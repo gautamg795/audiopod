@@ -8,7 +8,7 @@ var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 var iOSvid = "";
 var initialized = false;
 var queueTemplate;
-var index = 0;
+var skipIndex = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
 
 $(document).ready(function() {
@@ -110,10 +110,10 @@ function skipVideo()
 {
     player.stopVideo(); // in case this is the last video in the queue
     playNextVideo();
-    if (index == skipMessages.length) 
-        index = 0;
-    $("#skiptext").fadeOut('slow', function() { $(this).html(skipMessages[index]); }).fadeIn('slow');
-    index++;
+    if (skipIndex == skipMessages.length)
+        skipIndex = 0;
+    $("#skiptext").fadeOut('slow', function() { $(this).html(skipMessages[skipIndex]); }).fadeIn('slow');
+    skipIndex++;
 }
 
 function updateQueueStatus()
