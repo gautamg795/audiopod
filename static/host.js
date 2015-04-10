@@ -7,7 +7,6 @@ var player;
 var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 var iOSvid = "";
 var initialized = false;
-var videoQueue = [];
 var queueTemplate;
 var index = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
@@ -54,23 +53,33 @@ function onPlayerStateChange(event) {
     }
 }
 
-function playNextVideo()
+function initIfNeeded()
 {
     if (! initialized)
     {
         initialized = true;
         $(".initialHide").show();
     }
+}
+
+function playNextVideo()
+{
+    initIfNeeded();
     console.log("Playing next video");
-    if (videoQueue.length == 0) {
+    if (queueLength() == 0)
+    {
         console.log("Video queue was empty");
         return;
     }
-    var video = videoQueue.shift();
-    $("#" + video.vid + "-queue").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
-    updateQueueStatus();
-    iOSvid = video.vid;
-    player.loadVideoById(video.vid);
+    var vid = $("#up-next").children().first().attr('id').slice(0, -6);
+    $("#up-next").children().first().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
+    iOSvid = vid;
+    player.loadVideoById(vid);
+}
+
+function queueLength()
+{
+    return $("#up-next").children().length - $("#queueEmpty").length;
 }
 
 function addToQueue(video_info)
@@ -83,18 +92,17 @@ function addToQueue(video_info)
         return;
     }
     notify(video.title);
+    var state = player.getPlayerState();
+    if ($("#queueEmpty").length && (state == -1 || state == 5 || state == 0 ))
+    {
+        initIfNeeded();
+        player.loadVideoById(video.vid);
+        return;
+    }
     $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
     $(".nowbutton").click(playNow);
-    videoQueue.push(video);
-    /*
-     * TODO: Update the HTML on the page to add it to the "up next"
-     */
-    
-    var state = player.getPlayerState();
-    if (videoQueue.length == 1 && (state == -1 || state == 5 || state == 0 ))
-        playNextVideo();
     updateQueueStatus();
 }
 
@@ -113,11 +121,11 @@ function updateQueueStatus()
     var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/" + room_id +"</div>"
     if ($("#queueEmpty").length)
     {
-        if (videoQueue.length != 0)
+        if (queueLength() != 0)
             $("#queueEmpty").remove();
     }
-    else if (videoQueue.length == 0)
-        $("#up-next").append(message);
+    else if (queueLength() == 0)
+        $("#up-next").append(message).slideDown('slow');
 }
 
 function anchorSearchResults()
@@ -135,20 +143,11 @@ function anchorSearchResults()
 
 function deleteFromQueue()
 {
-    var v_id = $(this).closest(".queueEntry").attr('id');
-    v_id = v_id.substr(0,v_id.length-6);
-    videoQueue = _.without(videoQueue, _.findWhere(videoQueue, { vid : v_id}));
-    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
-    updateQueueStatus();
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
 }
 
 function moveToFront()
 {
-    var v_id = $(this).closest(".queueEntry").attr('id');
-    v_id = v_id.substr(0,v_id.length-6);
-    var video = _.findWhere(videoQueue, { vid : v_id});
-    videoQueue = _.without(videoQueue, video);
-    videoQueue.unshift(video);
     var el = $(this).closest(".queueEntry").clone(true);
     $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); }).delay(500);
     el.hide().prependTo("#up-next").fadeIn('slow');
@@ -158,11 +157,8 @@ function playNow()
 {
     var v_id = $(this).closest(".queueEntry").attr('id');
     v_id = v_id.substr(0,v_id.length-6);
-    var video = _.findWhere(videoQueue, { vid : v_id});
-    videoQueue = _.without(videoQueue, video);
-    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
-    updateQueueStatus();
-    player.loadVideoById(video.vid);
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
+    player.loadVideoById(v_id);
 }
 
 function notify(t)
