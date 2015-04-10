@@ -32,6 +32,11 @@ function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
         width: '640',
+        playerVars : {
+            rel: '0',
+            modestbranding: '1',
+            iv_load_policy: '3',
+        },
         events: {
             'onError': onVideoError,
             'onStateChange': onPlayerStateChange
