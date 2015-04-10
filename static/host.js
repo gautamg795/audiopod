@@ -167,9 +167,8 @@ function deleteFromQueue()
 
 function moveToFront()
 {
-    var el = $(this).closest(".queueEntry").clone(true);
-    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); }).delay(500);
-    el.hide().prependTo("#up-next").fadeIn('slow');
+    var el = $(this).closest(".queueEntry");
+    el.fadeOut('slow', function() { $(this).prependTo($(el).parent()).fadeIn('slow'); })
 }
 
 function playNow()
