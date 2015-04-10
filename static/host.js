@@ -51,6 +51,8 @@ function onPlayerStateChange(event) {
     if(event.data === 0) {          
         playNextVideo();
     }
+    if (event.data === 1)
+        updateNowPlaying();
 }
 
 function initIfNeeded()
@@ -126,6 +128,18 @@ function updateQueueStatus()
     }
     else if (queueLength() == 0)
         $("#up-next").append(message).slideDown('slow');
+}
+
+function updateNowPlaying()
+{
+    var message = 'Now Playing: "<%= video_name %>"';
+    message = _.template(message);
+    message = message({video_name : player.getVideoData().title});
+    if ($("#nowPlaying").text() == message)
+        return;
+    $('#nowPlaying').animate({'opacity': 0}, 500, function () {
+        $(this).text(message);
+    }).animate({'opacity': 1}, 500);
 }
 
 function anchorSearchResults()
