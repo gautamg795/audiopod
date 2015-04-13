@@ -5,8 +5,8 @@
 
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
 
- function queueVideo(video_info)
- {
+function queueVideo(video_info)
+{
  	return fayeClient.publish("/" + String(room_id), video_info);
 }
 

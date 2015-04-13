@@ -30,6 +30,18 @@ function onClientLoad(){
 			        $("#searchResults").children().fadeOut(500, function() { $(this).remove(); });
 			        return;
 				}
+				var videoid = query.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/);
+				if (videoid) {
+					var request = gapi.client.youtube.search.list({
+						q: videoid,
+						part: 'snippet',
+						maxResults: 10,
+						type: "video"
+					});
+					request.execute(addByUrl);
+
+					return;
+				}
 				var request = gapi.client.youtube.search.list({
 					q: query, 
 					part: 'snippet',
@@ -41,6 +53,38 @@ function onClientLoad(){
 				});
 		// document.getElementById('response').value += '1';
 }
+
+function addByUrl(response){
+	console.log(response);
+	searchResults = []; // clear old results
+	var resArray = response.result.items;
+	var idx;
+	for (idx = 0; idx < resArray.length; idx++)
+	{
+		var video = new Object();
+		video.vid = resArray[idx].id.videoId;
+		video.title = resArray[idx].snippet.title;
+		video.thumbnail = resArray[idx].snippet.thumbnails.medium.url;
+		video.author = resArray[idx].snippet.channelTitle;
+		video.description = resArray[idx].snippet.description;
+		searchResults.push(video);
+	}
+	if (searchResults.length == 0)
+	{
+		var result = "<div class='alert alert-warning' role='alert'>Sorry, no results were found.</div>";
+		$("#searchResults").empty();
+		$(result).hide().appendTo("#searchResults").fadeIn(1000);
+		return;
+	}
+	if (typeof(queueVideo) == "function")
+		queueVideo(JSON.stringify(searchResults[0])).then(function() {
+			notify(searchResults[0].title);	
+		});
+	else
+		addToQueue(JSON.stringify(searchResults[0]));
+	$("#searchText").val("")
+}
+
 function onSearchResponse(response){
 	console.log(response);
 	searchResults = []; // clear old results
