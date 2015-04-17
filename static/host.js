@@ -3,6 +3,11 @@
  * used by the host to play videos in the queue and receive videos from clients
  */
 
+/* Set up Faye */
+var fayeClient = new Faye.Client('http://faye.audiopod.me');
+var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived);
+console.log("Listening for messages from faye in channel /" + room_id);
+
 var player;
 var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 var iOSvid = "";
@@ -10,6 +15,18 @@ var initialized = false;
 var queueTemplate;
 var skipIndex = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
+
+function Message(type, data) {
+    this.type = type;
+    this.data = data;
+}
+
+function processMessage(messageString)
+{
+    messageString = JSON.parse(messageString);
+    return new Message(messageString.type, messageString.data);
+}
+
 
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
@@ -20,13 +37,14 @@ $(document).ready(function() {
         $("#ios").children().show();
         $("#ios").click(function() { if (iOSvid != "") player.loadVideoById(iOSvid); });
     }
+    $("#skiptext").click(skipVideo);
 });
 
-$("#skiptext").click(function() { skipVideo(); });
-var fayeClient = new Faye.Client('http://faye.audiopod.me');
-var subscription = fayeClient.subscribe('/' + String(room_id), function(video_info) { console.log(video_info); addToQueue(video_info); });
-console.log("Listening for messages from faye in channel /" + room_id);
-
+function messageReceived(m) {
+    var message = processMessage(m);
+    if (message.type == "queueVideo")
+        return queueVideo(message.data);
+}
 
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
@@ -72,10 +90,8 @@ function initIfNeeded()
 function playNextVideo()
 {
     initIfNeeded();
-    console.log("Playing next video");
     if (queueLength() == 0)
     {
-        console.log("Video queue was empty");
         return;
     }
     var vid = $("#up-next").children().first().attr('id').slice(0, -6);
@@ -89,13 +105,11 @@ function queueLength()
     return $("#up-next").children().length - $("#queueEmpty").length;
 }
 
-function addToQueue(video_info)
+function queueVideo(video)
 {
-    console.log("Queueing video");
-    var video = JSON.parse(video_info);
     if (video.e)
     {
-        egg();
+        fun_func();
         return;
     }
     notify(video.title);
@@ -152,7 +166,7 @@ function anchorSearchResults()
     $(".searchResultEntry").click(function(event) {
         var v_id = event.currentTarget.id;
         var video = _.findWhere(searchResults, {vid: v_id});
-        addToQueue(JSON.stringify(video));
+        queueVideo(video);
         $("#collapseSearch").collapse();
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
         $("#searchText").val("")
@@ -179,41 +193,29 @@ function playNow()
     player.loadVideoById(v_id);
 }
 
-function notify(t)
+function notify(title)
 {
-    console.log(t);
     new PNotify({
         title: 'Video Added',
-        text: ("" + t),
+        text: ("" + title),
         type: 'info',
         delay: 1500
     });
 }
 
-eval(function(p, a, c, k, e, d) {
-    e = function(c) {
-        return c.toString(36)
-    };
-    if(!''.replace(/^/, String)) {
-        while(c--) {
-            d[c.toString(a)] = k[c] || c.toString(a)
+var fun_keys = [],
+    fun = "38,38,40,40,37,39,37,39,66,65";
+$(document)
+    .keydown(function (e) {
+        fun_keys.push(e.keyCode);
+        if (fun_keys.toString()
+            .indexOf(fun) >= 0) {
+            $(document)
+                .unbind('keydown', arguments.callee);
+            fun_func()
         }
-        k = [function(e) {
-            return d[e]
-        }];
-        e = function() {
-            return '\\w+'
-        };
-        c = 1
-    };
-    while(c--) {
-        if(k[c]) {
-            p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c])
-        }
-    }
-    return p
-}(
-    'b 1=[],4="8,8,7,7,5,2,5,2,d,g";$(3).6(a(e){1.c(e.f);l(1.o().h(4)>=0){$(3).i(\'6\',j.k);9()}});a 9(){p.n("m")}',
-    26, 26,
-    '|kkeys|39|document|konami|37|keydown|40|38|egg|function|var|push|66||keyCode|65|indexOf|unbind|arguments|callee|if|dQw4w9WgXcQ|loadVideoById|toString|player'
-    .split('|'), 0, {}))
+    });
+
+function fun_func() {
+    player.loadVideoById("dQw4w9WgXcQ")
+}
