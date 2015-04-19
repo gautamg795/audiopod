@@ -5,9 +5,16 @@
 
 /* Set up Faye */
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
-var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived);
-console.log("Listening for messages from faye in channel /" + room_id);
+var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived)
+subscription.then(function() {
+    console.log("Listening for messages in channel /" + room_id);
+});
+var queueSubscription = fayeClient.subscribe('/' + String(room_id) + "/queueData", messageReceived)
+queueSubscription.then(function() {
+    sendMessage("", new Message("queueRequest", null));
+});
 
+/* Global variables */
 var player;
 var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
 var iOSvid = "";
@@ -15,19 +22,52 @@ var initialized = false;
 var queueTemplate;
 var skipIndex = 0;
 var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
+var uuid = guid();
+
+
 
 function Message(type, data) {
     this.type = type;
     this.data = data;
 }
 
+/**
+ * Creates a Message object for parsing
+ * @param  {String} messageString JSON string from Faye
+ * @return {Message}               A Message object
+ */
 function processMessage(messageString)
 {
     messageString = JSON.parse(messageString);
     return new Message(messageString.type, messageString.data);
 }
 
+/**
+ * Send a message to Faye
+ * @param  {String} endpoint Where to send the message, with leading slash
+ * @param  {Message} message  The data to send
+ */
+function sendMessage(endpoint, message)
+{
+    return fayeClient.publish("/" + String(room_id) + endpoint, JSON.stringify(message));
+}
 
+/**
+ * Callback for Faye when a message is received
+ * @param  {String} m Raw JSON string from Faye
+ */
+function messageReceived(m) {
+    var message = processMessage(m);
+    if (message.type == "queueVideo")
+        return queueVideo(message.data);
+    if (message.type == "queueRequest")
+        return queueRequest();
+    if (message.type == "queueData")
+        return checkHost(message.data.sender);
+}
+
+
+/* Page init code */
 $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     $('[data-toggle="tooltip"]').tooltip();
@@ -40,12 +80,10 @@ $(document).ready(function() {
     $("#skiptext").click(skipVideo);
 });
 
-function messageReceived(m) {
-    var message = processMessage(m);
-    if (message.type == "queueVideo")
-        return queueVideo(message.data);
-}
 
+
+
+/* Callback for when YT API is ready */
 function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
@@ -63,21 +101,27 @@ function onYouTubePlayerAPIReady() {
     updateQueueStatus();
 }
 
+/* YT Player calls these two functions as necessary */
 function onVideoError(event) {
     console.log("Error");
     player.stopVideo(); // in case this is the last video in the queue
     playNextVideo();
 }
 
-// when video ends
 function onPlayerStateChange(event) {        
     if(event.data === 0) {          
+        // Video ended
         playNextVideo();
     }
     if (event.data === 1)
+        // Video started playing
         updateNowPlaying();
 }
 
+
+/**
+ * Show the YT Player if it is still hidden
+ */
 function initIfNeeded()
 {
     if (! initialized)
@@ -87,6 +131,9 @@ function initIfNeeded()
     }
 }
 
+/**
+ * Find the next video in the queue and play it
+ */
 function playNextVideo()
 {
     initIfNeeded();
@@ -100,9 +147,47 @@ function playNextVideo()
     player.loadVideoById(vid);
 }
 
+/**
+ * Make sure that we are the only host
+ * @param  {String} id UUID from the incoming ping
+ */
+function checkHost(id)
+{
+    console.log("Got queueData, checking if it came from us...");
+    if (id == uuid)
+        // Wait 3 seconds -- maybe someone else's ping is still incoming
+        setTimeout(function() {
+                queueSubscription.cancel();
+                console.log("Host status verified");
+        }, 3000);
+    else
+    {
+        alert("Looks like someone's already hosting in this audiopod. Sending you back to the guest page!");
+        window.location.replace("../");
+    }
+
+}
+
+/**
+ * Gets the length of the queue
+ * @return {Integer} length of queue
+ */
 function queueLength()
 {
     return $("#up-next").children().length - $("#queueEmpty").length;
+}
+
+/**
+ * Incoming request for the queue from a client
+ * Send back a message with appropriate data
+ */
+function queueRequest()
+{
+    var queue = [];
+    if (queueLength())
+        $("#up-next").children().each(function() { queue.push($(this).attr('id').slice(0,-6)) });
+    var m = new Message("queueData", { sender: uuid, queue: queue});
+    sendMessage("/queueData", m);
 }
 
 function queueVideo(video)
@@ -201,6 +286,15 @@ function notify(title)
         type: 'info',
         delay: 1500
     });
+}
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4();
 }
 
 var fun_keys = [],

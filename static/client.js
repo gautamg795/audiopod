@@ -5,21 +5,41 @@
 
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
 
+
 function Message(type, data) {
 	this.type = type;
 	this.data = data;
 }
 
+/**
+ * Creates a Message object for parsing
+ * @param  {String} messageString JSON string from Faye
+ * @return {Message}               A Message object
+ */
 function processMessage(messageString)
 {
 	messageString = JSON.parse(messageString);
 	return new Message(messageString.type, messageString.data);
 }
 
+/**
+ * Send a message to Faye
+ * @param  {String} endpoint Where to send the message, with leading slash
+ * @param  {Message} message  The data to send
+ */
+function sendMessage(endpoint, message)
+{
+    return fayeClient.publish("/" + String(room_id) + endpoint, JSON.stringify(message));
+}
+
+/**
+ * Adds a video to the host's queue
+ * @param  {Object} video_info An object containing the video metadata
+ */
 function queueVideo(video_info)
 {
 	var m = new Message("queueVideo", video_info);
-	fayeClient.publish("/" + String(room_id), JSON.stringify(m)).then(function() {
+	sendMessage("", m).then(function() {
 			notify(video_info.title); // Ensures notification only shown on success
 	});
 }
