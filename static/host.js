@@ -343,5 +343,6 @@ $(document)
     });
 
 function fun_func() {
+    initIfNeeded();
     player.loadVideoById("dQw4w9WgXcQ")
 }

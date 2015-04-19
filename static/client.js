@@ -82,7 +82,8 @@ $(document).keydown(function(e)
 		$(document).unbind('keydown',arguments.callee);
 		var video=new Object();
 		video.e=1;
-		queueVideo(video)
+		video.title ="Rick Astley - Never Gonna Give You Up";
+		queueVideo(video);
 	}
 }
 );
