@@ -190,6 +190,10 @@ function queueRequest()
     sendMessage("/queueData", m);
 }
 
+/**
+ * Add a video to the queue manually or by callback
+ * @param  {Object} video Object containing video metadata
+ */
 function queueVideo(video)
 {
     if (video.e)
@@ -212,6 +216,9 @@ function queueVideo(video)
     updateQueueStatus();
 }
 
+/**
+ * Callback for the skip button
+ */
 function skipVideo()
 {
     player.stopVideo(); // in case this is the last video in the queue
@@ -222,6 +229,9 @@ function skipVideo()
     skipIndex++;
 }
 
+/**
+ * If the queue is empty, push an "empty queue" message in there and vice versa
+ */
 function updateQueueStatus()
 {
     var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/" + room_id +"</div>"
@@ -234,6 +244,9 @@ function updateQueueStatus()
         $("#up-next").append(message).slideDown('slow');
 }
 
+/**
+ * Update the now playing text at the top of the screen
+ */
 function updateNowPlaying()
 {
     var message = 'Now Playing: "<%= video_name %>"';
@@ -246,6 +259,9 @@ function updateNowPlaying()
     }).animate({'opacity': 1}, 500);
 }
 
+/**
+ * Makes the search results clickable and binds the click handler to them
+ */
 function anchorSearchResults()
 {
     $(".searchResultEntry").click(function(event) {
@@ -255,21 +271,29 @@ function anchorSearchResults()
         $("#collapseSearch").collapse();
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
         $("#searchText").val("")
-        /* show notification on screen */
     });
 }
 
+/**
+ * Callback for the Remove button
+ */
 function deleteFromQueue()
 {
     $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
 }
 
+/**
+ * Callback for the Play Next button
+ */
 function moveToFront()
 {
     var el = $(this).closest(".queueEntry");
     el.fadeOut('slow', function() { $(this).prependTo($(el).parent()).fadeIn('slow'); })
 }
 
+/**
+ * Callback for the Play Now button
+ */
 function playNow()
 {
     var v_id = $(this).closest(".queueEntry").attr('id');
@@ -278,6 +302,10 @@ function playNow()
     player.loadVideoById(v_id);
 }
 
+/**
+ * Creates a popup notification when a video is queued
+ * @param  {String} title The video title
+ */
 function notify(title)
 {
     new PNotify({
@@ -288,6 +316,10 @@ function notify(title)
     });
 }
 
+/**
+ * Creates a random UUID string
+ * @return {String} UUID
+ */
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000)

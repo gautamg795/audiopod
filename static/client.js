@@ -47,7 +47,7 @@ function queueVideo(video_info)
 
 /**
  * Creates a popup notification when a video is queued
- * @param  {string} title the video title
+ * @param  {String} title the video title
  */
 function notify(title)
 {
