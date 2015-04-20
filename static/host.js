@@ -16,12 +16,12 @@ queueSubscription.then(function() {
 
 /* Global variables */
 var player;
-var iOS = ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
+var iOS = (navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false);
 var iOSvid = "";
 var initialized = false;
 var queueTemplate;
 var skipIndex = 0;
-var skipMessages = [ "Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
+var skipMessages = ["Not feelin' it? Skip it!", "WORST song ever??? Click here to skip it!", "Hate this song? Click here to skip it!", "Who even picked this? Click here to skip!", "Don't like this song? Click here to skip it!"];
 var uuid = guid();
 
 
@@ -36,8 +36,7 @@ function Message(type, data) {
  * @param  {String} messageString JSON string from Faye
  * @return {Message}               A Message object
  */
-function processMessage(messageString)
-{
+function processMessage(messageString) {
     messageString = JSON.parse(messageString);
     return new Message(messageString.type, messageString.data);
 }
@@ -47,8 +46,7 @@ function processMessage(messageString)
  * @param  {String} endpoint Where to send the message, with leading slash
  * @param  {Message} message  The data to send
  */
-function sendMessage(endpoint, message)
-{
+function sendMessage(endpoint, message) {
     return fayeClient.publish("/" + String(room_id) + endpoint, JSON.stringify(message));
 }
 
@@ -75,7 +73,9 @@ $(document).ready(function() {
     $("#ios").children().hide();
     if (iOS) {
         $("#ios").children().show();
-        $("#ios").click(function() { if (iOSvid != "") player.loadVideoById(iOSvid); });
+        $("#ios").click(function() {
+            if (iOSvid != "") player.loadVideoById(iOSvid);
+        });
     }
     $("#skiptext").click(skipVideo);
 });
@@ -88,7 +88,7 @@ function onYouTubePlayerAPIReady() {
     player = new YT.Player('player', {
         height: '390',
         width: '640',
-        playerVars : {
+        playerVars: {
             rel: '0',
             modestbranding: '1',
             iv_load_policy: '3',
@@ -108,13 +108,13 @@ function onVideoError(event) {
     playNextVideo();
 }
 
-function onPlayerStateChange(event) {        
-    if(event.data === 0) {          
+function onPlayerStateChange(event) {
+    if (event.data === 0) {
         // Video ended
         playNextVideo();
     }
     if (event.data === 1)
-        // Video started playing
+    // Video started playing
         updateNowPlaying();
 }
 
@@ -122,10 +122,8 @@ function onPlayerStateChange(event) {
 /**
  * Show the YT Player if it is still hidden
  */
-function initIfNeeded()
-{
-    if (! initialized)
-    {
+function initIfNeeded() {
+    if (!initialized) {
         initialized = true;
         $(".initialHide").show();
     }
@@ -134,15 +132,16 @@ function initIfNeeded()
 /**
  * Find the next video in the queue and play it
  */
-function playNextVideo()
-{
+function playNextVideo() {
     initIfNeeded();
-    if (queueLength() == 0)
-    {
+    if (queueLength() == 0) {
         return;
     }
     var vid = $("#up-next").children().first().attr('id').slice(0, -6);
-    $("#up-next").children().first().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
+    $("#up-next").children().first().fadeTo('slow', 0).slideUp(500, function() {
+        $(this).remove();
+        updateQueueStatus();
+    });
     iOSvid = vid;
     player.loadVideoById(vid);
 }
@@ -151,17 +150,15 @@ function playNextVideo()
  * Make sure that we are the only host
  * @param  {String} id UUID from the incoming ping
  */
-function checkHost(id)
-{
+function checkHost(id) {
     console.log("Got queueData, checking if it came from us...");
     if (id == uuid)
-        // Wait 3 seconds -- maybe someone else's ping is still incoming
+    // Wait 3 seconds -- maybe someone else's ping is still incoming
         setTimeout(function() {
-                queueSubscription.cancel();
-                console.log("Host status verified");
-        }, 3000);
-    else
-    {
+        queueSubscription.cancel();
+        console.log("Host status verified");
+    }, 3000);
+    else {
         alert("Looks like someone's already hosting in this audiopod. Sending you back to the guest page!");
         window.location.replace("../");
     }
@@ -172,8 +169,7 @@ function checkHost(id)
  * Gets the length of the queue
  * @return {Integer} length of queue
  */
-function queueLength()
-{
+function queueLength() {
     return $("#up-next").children().length - $("#queueEmpty").length;
 }
 
@@ -181,12 +177,16 @@ function queueLength()
  * Incoming request for the queue from a client
  * Send back a message with appropriate data
  */
-function queueRequest()
-{
+function queueRequest() {
     var queue = [];
     if (queueLength())
-        $("#up-next").children().each(function() { queue.push($(this).attr('id').slice(0,-6)) });
-    var m = new Message("queueData", { sender: uuid, queue: queue});
+        $("#up-next").children().each(function() {
+            queue.push($(this).attr('id').slice(0, -6))
+        });
+    var m = new Message("queueData", {
+        sender: uuid,
+        queue: queue
+    });
     sendMessage("/queueData", m);
 }
 
@@ -194,22 +194,21 @@ function queueRequest()
  * Add a video to the queue manually or by callback
  * @param  {Object} video Object containing video metadata
  */
-function queueVideo(video)
-{
-    if (video.e)
-    {
+function queueVideo(video) {
+    if (video.e) {
         fun_func();
         return;
     }
     notify(video.title);
     var state = player.getPlayerState();
-    if ($("#queueEmpty").length && (state == -1 || state == 5 || state == 0 ))
-    {
+    if ($("#queueEmpty").length && (state == -1 || state == 5 || state == 0)) {
         initIfNeeded();
         player.loadVideoById(video.vid);
         return;
     }
-    $(queueTemplate({video : video})).hide().appendTo("#up-next").fadeIn('slow');
+    $(queueTemplate({
+        video: video
+    })).hide().appendTo("#up-next").fadeIn('slow');
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
     $(".nowbutton").click(playNow);
@@ -219,57 +218,63 @@ function queueVideo(video)
 /**
  * Callback for the skip button
  */
-function skipVideo()
-{
+function skipVideo() {
     player.stopVideo(); // in case this is the last video in the queue
     playNextVideo();
     if (skipIndex == skipMessages.length)
         skipIndex = 0;
-    $("#skiptext").fadeOut('slow', function() { $(this).html(skipMessages[skipIndex]); }).fadeIn('slow');
+    $("#skiptext").fadeOut('slow', function() {
+        $(this).html(skipMessages[skipIndex]);
+    }).fadeIn('slow');
     skipIndex++;
 }
 
 /**
  * If the queue is empty, push an "empty queue" message in there and vice versa
  */
-function updateQueueStatus()
-{
-    var message ="<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/" + room_id +"</div>"
-    if ($("#queueEmpty").length)
-    {
+function updateQueueStatus() {
+    var message = "<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/" + room_id + "</div>"
+    if ($("#queueEmpty").length) {
         if (queueLength() != 0)
             $("#queueEmpty").remove();
-    }
-    else if (queueLength() == 0)
+    } else if (queueLength() == 0)
         $("#up-next").append(message).slideDown('slow');
 }
 
 /**
  * Update the now playing text at the top of the screen
  */
-function updateNowPlaying()
-{
+function updateNowPlaying() {
     var message = 'Now Playing: "<%= video_name %>"';
     message = _.template(message);
-    message = message({video_name : player.getVideoData().title});
+    message = message({
+        video_name: player.getVideoData().title
+    });
     if ($("#nowPlaying").text() == message)
         return;
-    $('#nowPlaying').animate({'opacity': 0}, 500, function () {
+    $('#nowPlaying').animate({
+        'opacity': 0
+    }, 500, function() {
         $(this).text(message);
-    }).animate({'opacity': 1}, 500);
+    }).animate({
+        'opacity': 1
+    }, 500);
 }
 
 /**
  * Makes the search results clickable and binds the click handler to them
  */
-function anchorSearchResults()
-{
+function anchorSearchResults() {
     $(".searchResultEntry").click(function(event) {
         var v_id = event.currentTarget.id;
-        var video = _.findWhere(searchResults, {vid: v_id});
+        var video = _.findWhere(searchResults, {
+            vid: v_id
+        });
         queueVideo(video);
         $("#collapseSearch").collapse();
-        $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); });
+        $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() {
+            $(this).remove();
+        });
         $("#searchText").val("")
     });
 }
@@ -277,28 +282,33 @@ function anchorSearchResults()
 /**
  * Callback for the Remove button
  */
-function deleteFromQueue()
-{
-    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
+function deleteFromQueue() {
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() {
+        $(this).remove();
+        updateQueueStatus();
+    });
 }
 
 /**
  * Callback for the Play Next button
  */
-function moveToFront()
-{
+function moveToFront() {
     var el = $(this).closest(".queueEntry");
-    el.fadeOut('slow', function() { $(this).prependTo($(el).parent()).fadeIn('slow'); })
+    el.fadeOut('slow', function() {
+        $(this).prependTo($(el).parent()).fadeIn('slow');
+    })
 }
 
 /**
  * Callback for the Play Now button
  */
-function playNow()
-{
+function playNow() {
     var v_id = $(this).closest(".queueEntry").attr('id');
-    v_id = v_id.substr(0,v_id.length-6);
-    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() { $(this).remove(); updateQueueStatus(); });
+    v_id = v_id.substr(0, v_id.length - 6);
+    $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() {
+        $(this).remove();
+        updateQueueStatus();
+    });
     player.loadVideoById(v_id);
 }
 
@@ -306,8 +316,7 @@ function playNow()
  * Creates a popup notification when a video is queued
  * @param  {String} title The video title
  */
-function notify(title)
-{
+function notify(title) {
     new PNotify({
         title: 'Video Added',
         text: ("" + title),
@@ -321,18 +330,18 @@ function notify(title)
  * @return {String} UUID
  */
 function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4();
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4();
 }
 
 var fun_keys = [],
     fun = "38,38,40,40,37,39,37,39,66,65";
 $(document)
-    .keydown(function (e) {
+    .keydown(function(e) {
         fun_keys.push(e.keyCode);
         if (fun_keys.toString()
             .indexOf(fun) >= 0) {
