@@ -76,12 +76,7 @@ function addByUrl(response){
 		$(result).hide().appendTo("#searchResults").fadeIn(1000);
 		return;
 	}
-	if (typeof(queueVideo) == "function")
-		queueVideo(JSON.stringify(searchResults[0])).then(function() {
-			notify(searchResults[0].title);	
-		});
-	else
-		addToQueue(JSON.stringify(searchResults[0]));
+	queueVideo(searchResults[0]);
 	$("#searchText").val("")
 }
 

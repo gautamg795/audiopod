@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}audiopod - sending to "{{room_id}}"{% endblock %}
+{% block title %}audiopod - guest in "{{room_id}}"{% endblock %}
 {% block head %}
 	<script type="text/javascript"> var room_id = '{{ room_id }}'; </script>
 {% endblock %}
@@ -24,13 +24,36 @@
 			</div>
 			<br />
 			<div class="row" id="searchResults"></div>
-		</div>
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<p>Use the form above to search for music on YouTube, and click on a video to add it to the queue!</p>
+			<!-- Queue -->
+			<div class="row">
+			    <div class="panel-group">
+			        <div class="panel panel-default">
+			            <div class="panel-heading">
+			                <h4 class="panel-title">
+			                <a class="accordion-toggle" data-toggle="collapse"  href="#collapseQueue">Up Next</a>&nbsp;<a id="refreshQueue" style="float: right" href="javascript:void(0)" class="glyphicon glyphicon-refresh" style="top: 2px;"></a>
+			                </h4>
+			            </div>
+			            <div class="panel-collapse collapse in" id="collapseQueue">
+			                <div class="list-group" id="up-next">
+			                </div>
+			            </div>
+			        </div>
+			    </div>
 			</div>
 		</div>
 	</div>
+	<script type="text/template" id="queueEntryTemplate">
+	    <a href="javascript:void(0)" class="list-group-item media queueEntry" id="<%= video.vid %>-queue"> 
+	        <div class="row">
+	            <div class="col-md-4">
+	                <img class="img-responsive" src="<%= video.thumbnail %>">
+	            </div>
+	            <div class="col-md-8">
+	                <h4 class="media-heading"><%= video.title %></h4><%= video.description %>
+	            </div>
+	        </div>
+		</a>
+	</script>
 {% endblock %}
 {% block scripts %}
 	<script defer src="https://www.youtube.com/iframe_api"></script>
