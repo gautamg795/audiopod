@@ -151,18 +151,15 @@ function playNextVideo() {
  * @param  {String} id UUID from the incoming ping
  */
 function checkHost(id) {
-    console.log("Got queueData, checking if it came from us...");
     if (id == uuid)
     // Wait 3 seconds -- maybe someone else's ping is still incoming
         setTimeout(function() {
         queueSubscription.cancel();
-        console.log("Host status verified");
-    }, 3000);
-    else {
+    }, 8000);
+    else if (id < uuid) {
         alert("Looks like someone's already hosting in this audiopod. Sending you back to the guest page!");
         window.location.replace("../");
     }
-
 }
 
 /**
@@ -330,12 +327,12 @@ function notify(title) {
  * @return {String} UUID
  */
 function guid() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+    if (!Date.now) {
+        Date.now = function() {
+            return new Date().getTime();
+        }
     }
-    return s4() + s4();
+    return Date.now();
 }
 
 var fun_keys = [],
