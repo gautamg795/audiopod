@@ -4,12 +4,25 @@
  */
 
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
+var subscription = fayeClient.subscribe("/" + String(room_id) + "/queueData", messageReceived);
+subscription.then(function() {
+	refreshQueue();
+});
+var queueTemplate;
 
 
 function Message(type, data) {
     this.type = type;
     this.data = data;
 }
+
+/* Page init code */
+$(document).ready(function() {
+    queueTemplate = _.template($("#queueEntryTemplate").html());
+    updateQueueStatus();
+    $("#refreshQueue").click(refreshQueue);
+});
+
 
 /**
  * Creates a Message object for parsing
@@ -28,6 +41,18 @@ function processMessage(messageString) {
  */
 function sendMessage(endpoint, message) {
     return fayeClient.publish("/" + String(room_id) + endpoint, JSON.stringify(message));
+}
+
+function messageReceived(m) {
+	var message = processMessage(m);
+	if (message.type == "queueData")
+		return processQueueData(message.data.queue);
+	else if (message.type == "queueAdd")
+		return queueAdd(message.data);
+	else if (message.type == "queueRemove")
+		return queueRemove(message.data);
+	else if (message.type == "queueFront")
+		return queueFront(message.data);
 }
 
 /**
@@ -70,6 +95,71 @@ function anchorSearchResults() {
         });
         $("#searchText").val("")
     });
+}
+
+/**
+ * Gets the length of the queue
+ * @return {Integer} length of queue
+ */
+function queueLength() {
+    return $("#up-next").children().length - $("#queueEmpty").length;
+}
+
+/**
+ * If the queue is empty, push an "empty queue" message in there and vice versa
+ */
+function updateQueueStatus() {
+    var message = "<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>The queue is empty. Search for a song above!</div>"
+    if ($("#queueEmpty").length) {
+        if (queueLength() != 0)
+            $("#queueEmpty").remove();
+    } else if (queueLength() == 0)
+        $("#up-next").append(message).slideDown('slow');
+}
+
+function processQueueData(qd) {
+	if (queueLength() > 0) {
+		$("#up-next").children().fadeOut('slow', 0).slideUp(200, function() {
+		    $(this).remove();
+		    updateQueueStatus();
+		});
+	}
+	qd.forEach(function(video) {
+		$(queueTemplate({
+		    video: video
+		})).hide().appendTo("#up-next").fadeIn('slow');
+	});
+	updateQueueStatus();
+}
+function queueAdd(video) {
+    $(queueTemplate({
+        video: video
+    })).hide().appendTo("#up-next").fadeIn('slow', function() {
+        updateQueueStatus();
+    });
+}
+function queueRemove(vid) {
+	var el = $("#" + vid);
+	if (!el.length)
+		return;
+	el.fadeTo('slow', 0).slideUp(500, function() {
+        $(this).remove();
+        updateQueueStatus();
+    });
+}
+
+function queueFront(vid) {
+	var el = $("#" + vid);
+	if (!el.length)
+		return refreshQueue();
+	el.fadeOut('slow', function() {
+	    $(this).prependTo($(el).parent()).fadeIn('slow');
+	    updateQueueStatus();
+	})
+}
+function refreshQueue() {
+	var msg = new Message("queueRequest", null);
+	sendMessage("", msg);
 }
 
 var fun_keys = [],

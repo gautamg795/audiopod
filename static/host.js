@@ -5,11 +5,11 @@
 
 /* Set up Faye */
 var fayeClient = new Faye.Client('http://faye.audiopod.me');
-var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived)
+var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived);
 subscription.then(function() {
     console.log("Listening for messages in channel /" + room_id);
 });
-var queueSubscription = fayeClient.subscribe('/' + String(room_id) + "/queueData", messageReceived)
+var queueSubscription = fayeClient.subscribe('/' + String(room_id) + "/queueData", messageReceived);
 queueSubscription.then(function() {
     sendMessage("", new Message("queueRequest", null));
 });
@@ -139,6 +139,8 @@ function playNextVideo() {
     }
     var vid = $("#up-next").children().first().attr('id').slice(0, -6);
     $("#up-next").children().first().fadeTo('slow', 0).slideUp(500, function() {
+        var m = new Message("queueRemove", $(this).attr('id'));
+        sendMessage("/queueData", m);
         $(this).remove();
         updateQueueStatus();
     });
@@ -178,7 +180,7 @@ function queueRequest() {
     var queue = [];
     if (queueLength())
         $("#up-next").children().each(function() {
-            queue.push($(this).attr('id').slice(0, -6))
+            queue.push(JSON.parse($(this).data('vdata')));
         });
     var m = new Message("queueData", {
         sender: uuid,
@@ -206,10 +208,13 @@ function queueVideo(video) {
     $(queueTemplate({
         video: video
     })).hide().appendTo("#up-next").fadeIn('slow');
+    $("#" + video.vid + "-queue").data("vdata", JSON.stringify(video));
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
     $(".nowbutton").click(playNow);
     updateQueueStatus();
+    var m = new Message("queueAdd", video);
+    sendMessage("/queueData", m);
 }
 
 /**
@@ -268,7 +273,7 @@ function anchorSearchResults() {
             vid: v_id
         });
         queueVideo(video);
-        $("#collapseSearch").collapse();
+        // $("#collapseSearch").collapse();
         $("#searchResults").children().fadeTo('slow', 0).slideUp(500, function() {
             $(this).remove();
         });
@@ -281,6 +286,8 @@ function anchorSearchResults() {
  */
 function deleteFromQueue() {
     $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() {
+        var m = new Message("queueRemove", $(this).attr('id'));
+        sendMessage("/queueData", m);
         $(this).remove();
         updateQueueStatus();
     });
@@ -291,8 +298,13 @@ function deleteFromQueue() {
  */
 function moveToFront() {
     var el = $(this).closest(".queueEntry");
+    if (el.attr('id') == $("#up-next").children().first().attr('id'))
+        return;
     el.fadeOut('slow', function() {
         $(this).prependTo($(el).parent()).fadeIn('slow');
+        updateQueueStatus();
+        var m = new Message("queueFront", $(this).attr('id'));
+        sendMessage("/queueData", m);
     })
 }
 
@@ -303,6 +315,8 @@ function playNow() {
     var v_id = $(this).closest(".queueEntry").attr('id');
     v_id = v_id.substr(0, v_id.length - 6);
     $(this).closest(".queueEntry").fadeTo('slow', 0).slideUp(500, function() {
+        var m = new Message("queueRemove", $(this).attr('id'));
+        sendMessage("/queueData", m);
         $(this).remove();
         updateQueueStatus();
     });
