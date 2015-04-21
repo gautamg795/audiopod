@@ -117,6 +117,10 @@ function updateQueueStatus() {
         $("#up-next").append(message).slideDown('slow');
 }
 
+/**
+ * Callback for when we receive queueData from host
+ * @param  {Array} qd Array of Objects containing the video metadata
+ */
 function processQueueData(qd) {
 	if (queueLength() > 0) {
 		$("#up-next").children().fadeOut('slow', 0).slideUp(200, function() {
@@ -131,6 +135,11 @@ function processQueueData(qd) {
 	});
 	updateQueueStatus();
 }
+
+/**
+ * Callback for when host adds video to queue
+ * @param  {Object} video Object containing video metadata
+ */
 function queueAdd(video) {
     $(queueTemplate({
         video: video
@@ -138,6 +147,11 @@ function queueAdd(video) {
         updateQueueStatus();
     });
 }
+
+/**
+ * Callback for when host removes video from queue (or plays a video)
+ * @param  {String} vid video id to remove
+ */
 function queueRemove(vid) {
 	var el = $("#" + vid);
 	if (!el.length)
@@ -148,6 +162,10 @@ function queueRemove(vid) {
     });
 }
 
+/**
+ * Callback for when host moves video to front of queue
+ * @param  {String} vid video id to move
+ */
 function queueFront(vid) {
 	var el = $("#" + vid);
 	if (!el.length)
@@ -157,6 +175,10 @@ function queueFront(vid) {
 	    updateQueueStatus();
 	})
 }
+
+/**
+ * Asks the queue for freshest queue data (and used by the refresh button)
+ */
 function refreshQueue() {
 	var msg = new Message("queueRequest", null);
 	sendMessage("", msg);
