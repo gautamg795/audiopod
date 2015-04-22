@@ -122,6 +122,17 @@ function updateQueueStatus() {
  * @param  {Array} qd Array of Objects containing the video metadata
  */
 function processQueueData(qd) {
+    if (function() {
+        if (qd.length == queueLength()) {
+            var c = $("#up-next").children();
+            for (var i = 0; i < qd.length; i++)
+                if (qd[i].vid != c.eq(i).attr('id').slice(0, -6))
+                    return false;
+        } else
+            return false;
+        return true;
+    }())
+        return; // Return if the queue hasn't changed
 	if (queueLength() > 0) {
 		$("#up-next").children().fadeOut('slow', 0).slideUp(200, function() {
 		    $(this).remove();
