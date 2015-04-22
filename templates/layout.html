@@ -23,6 +23,8 @@
            ga('send', 'pageview');
 
          </script>
+        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
         {% block head %} {% endblock %}
     </head>
     <body>
@@ -34,8 +36,6 @@
                 <p class="text-muted">Made with no sleep by DJGJ @ LA Hacks 2015</p>
             </div>
         </footer>
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
         <div id="fb-root"></div>
         <script async="async">(function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
