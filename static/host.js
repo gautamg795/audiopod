@@ -135,6 +135,7 @@ function initIfNeeded() {
 function playNextVideo() {
     initIfNeeded();
     if (queueLength() == 0) {
+        sendMessage("/queueData", new Message("nowPlaying", ""));
         return;
     }
     var vid = $("#up-next").children().first().attr('id').slice(0, -6);
@@ -184,7 +185,8 @@ function queueRequest() {
         });
     var m = new Message("queueData", {
         sender: uuid,
-        queue: queue
+        queue: queue,
+        nowplaying: $("#nowPlaying > span").text()
     });
     sendMessage("/queueData", m);
 }
@@ -247,17 +249,15 @@ function updateQueueStatus() {
  * Update the now playing text at the top of the screen
  */
 function updateNowPlaying() {
-    var message = 'Now Playing: "<%= video_name %>"';
-    message = _.template(message);
-    message = message({
-        video_name: player.getVideoData().title
-    });
-    if ($("#nowPlaying").text() == message)
+    var message = player.getVideoData().title
+    var m = new Message("nowPlaying", message);
+    sendMessage("/queueData", m);
+    if ($("#nowPlaying > span").text() == message)
         return;
     $('#nowPlaying').animate({
         'opacity': 0
     }, 500, function() {
-        $(this).text(message);
+        $('#nowPlaying > span').text(message);
     }).animate({
         'opacity': 1
     }, 500);

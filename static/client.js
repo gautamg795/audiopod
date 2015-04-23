@@ -46,13 +46,15 @@ function sendMessage(endpoint, message) {
 function messageReceived(m) {
 	var message = processMessage(m);
 	if (message.type == "queueData")
-		return processQueueData(message.data.queue);
+		return processQueueData(message.data);
 	else if (message.type == "queueAdd")
 		return queueAdd(message.data);
 	else if (message.type == "queueRemove")
 		return queueRemove(message.data);
 	else if (message.type == "queueFront")
 		return queueFront(message.data);
+	else if (message.type == "nowPlaying")
+		return updateNowPlaying(message.data);
 }
 
 /**
@@ -122,6 +124,8 @@ function updateQueueStatus() {
  * @param  {Array} qd Array of Objects containing the video metadata
  */
 function processQueueData(qd) {
+	updateNowPlaying(qd.nowplaying);
+	qd = qd.queue;
     if (function() {
         if (qd.length == queueLength()) {
             var c = $("#up-next").children();
@@ -193,6 +197,18 @@ function queueFront(vid) {
 function refreshQueue() {
 	var msg = new Message("queueRequest", null);
 	sendMessage("", msg);
+}
+
+function updateNowPlaying(title) {
+	if ($("#nowPlaying > span").text().slice(1,-1) == title)
+	    return;
+	$('#nowPlaying').animate({
+	    'opacity': 0
+	}, 500, function() {
+	    $('#nowPlaying > span').text(title == "" ? "" : ('"'+title+'"'));
+	}).animate({
+	    'opacity': 1
+	}, 500);
 }
 
 var fun_keys = [],
