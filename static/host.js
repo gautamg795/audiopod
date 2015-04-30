@@ -181,7 +181,7 @@ function queueRequest() {
     var queue = [];
     if (queueLength())
         $("#up-next").children().each(function() {
-            queue.push(JSON.parse($(this).data('vdata')));
+            queue.push($(this).data('vdata'));
         });
     var m = new Message("queueData", {
         sender: uuid,
@@ -210,7 +210,7 @@ function queueVideo(video) {
     $(queueTemplate({
         video: video
     })).hide().appendTo("#up-next").fadeIn('slow');
-    $("#" + video.vid + "-queue").data("vdata", JSON.stringify(video));
+    $("#" + video.vid + "-queue").data("vdata", video);
     $(".deletebutton").click(deleteFromQueue);
     $(".nextbutton").click(moveToFront);
     $(".nowbutton").click(playNow);
