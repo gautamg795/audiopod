@@ -109,11 +109,18 @@ function onVideoError(event) {
 }
 
 function onPlayerStateChange(event) {
-    if (event.data === 0) {
+    sendMessage("/queueData", new Message("playerState", {
+                type: event.data,
+                state: player.getPlayerState(),
+                vid: player.getVideoData().video_id,
+                time: player.getCurrentTime(),
+                currentTime: Date.now()
+            }));
+    if (event.data === YT.PlayerState.ENDED) {
         // Video ended
         playNextVideo();
     }
-    if (event.data === 1)
+    if (event.data === YT.PlayerState.PLAYING)
     // Video started playing
         updateNowPlaying();
 }
@@ -186,7 +193,11 @@ function queueRequest() {
     var m = new Message("queueData", {
         sender: uuid,
         queue: queue,
-        nowplaying: $("#nowPlaying > span").text()
+        nowplaying: $("#nowPlaying > span").text(),
+        state: player.getPlayerState(),
+        vid: player.getVideoData().video_id,
+        time: player.getCurrentTime(),
+        currentTime: Date.now()
     });
     sendMessage("/queueData", m);
 }
