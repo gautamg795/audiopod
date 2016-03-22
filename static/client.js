@@ -9,8 +9,6 @@ subscription.then(function() {
 	refreshQueue();
 });
 var queueTemplate;
-var playerVisible = false;
-var player;
 
 
 function Message(type, data) {
@@ -23,41 +21,7 @@ $(document).ready(function() {
     queueTemplate = _.template($("#queueEntryTemplate").html());
     updateQueueStatus();
     $("#refreshQueue").click(refreshQueue);
-    $(".initialHide").hide();
-    $("#showhide").click(function() {
-        if (playerVisible)
-        {
-            $(".initialHide").hide();
-            player.destroy();
-            playerVisible = false;
-        }
-        else
-        {
-            playerVisible = true;
-            onYouTubePlayerAPIReady();
-            $(".initialHide").show();
-            refreshQueue();
-        }
-    });
 });
-
-/* Callback for when YT API is ready */
-function onYouTubePlayerAPIReady() {
-    if (playerVisible)
-    player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        playerVars: {
-            rel: '0',
-            modestbranding: '1',
-            iv_load_policy: '3',
-            autoplay: '0',
-            controls: '0',
-        },
-        events: {
-        }
-    });
-}
 
 
 /**
@@ -91,41 +55,6 @@ function messageReceived(m) {
 		return queueFront(message.data);
 	else if (message.type == "nowPlaying")
 		return updateNowPlaying(message.data);
-    else if (message.type == "playerState")
-        return updatePlayerState(message.data);
-}
-
-/**
- * Update the player to match the host's state
- * @param  {Object} data Object with player state, video info, etc
- */
-function updatePlayerState(data)
-{
-    if (!playerVisible)
-        return;
-    var vData = player.getVideoData();
-    var delay = (Date.now() - data.currentTime)/1000;
-
-    if (vData) {
-        if (vData.video_id != data.vid) {
-            player.loadVideoById(data.vid, data.time + 0.4 + delay);
-        }
-    }
-    if (Math.abs(player.getCurrentTime() - data.time) > 0.5)
-    {
-        player.seekTo(data.time + 0.2 + delay);
-    }
-    if (data.type == 0)
-        player.stopVideo();
-    else if (data.type == -1) {
-        player.loadVideoById(data.vid);
-        player.stopVideo();
-    }
-    else if (data.type == 1)
-        player.playVideo();
-    else if (data.type == 2)
-        player.pauseVideo();
-
 }
 
 /**
@@ -195,30 +124,6 @@ function updateQueueStatus() {
  * @param  {Array} qd Array of Objects containing the video metadata
  */
 function processQueueData(qd) {
-    if (playerVisible) {
-        if (! qd.vid)
-            return;
-        var delay = (Date.now() - qd.currentTime)/1000;
-        if (player.getVideoData().video_id != qd.vid) {
-            player.loadVideoById(qd.vid, qd.time + delay + 1.5);
-        }
-        else
-            player.seekTo(qd.time + delay + 0.4);
-        if (player.getPlayerState() != qd.state) {
-            if (qd.state == -1 || qd.state == 0)
-            {
-                player.stopVideo();
-            }
-            else if (qd.state == 2)
-            {
-                player.pauseVideo();
-            }
-            else if (qd.state == 1)
-            {
-                player.playVideo();
-            }
-        }
-    }
 	updateNowPlaying(qd.nowplaying);
 	qd = qd.queue;
     if (function() {
