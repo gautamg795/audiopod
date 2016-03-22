@@ -3,7 +3,7 @@
  * used by the client to search for videos and queue them
  */
 
-var fayeClient = new Faye.Client('http://faye.audiopod.me');
+var fayeClient = new Faye.Client('http://faye.audiopod.xyz');
 var subscription = fayeClient.subscribe("/" + String(room_id) + "/queueData", messageReceived);
 subscription.then(function() {
 	refreshQueue();
