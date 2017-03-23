@@ -4,7 +4,7 @@
  */
 
 /* Set up Faye */
-var fayeClient = new Faye.Client('http://faye.audiopod.xyz');
+var fayeClient = new Faye.Client('http://faye.audiopod.me');
 var subscription = fayeClient.subscribe('/' + String(room_id), messageReceived);
 subscription.then(function() {
     console.log("Listening for messages in channel /" + room_id);
@@ -237,7 +237,7 @@ function skipVideo() {
  * If the queue is empty, push an "empty queue" message in there and vice versa
  */
 function updateQueueStatus() {
-    var message = "<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.xyz/" + room_id + "</div>"
+    var message = "<div class='list-group-item alert alert-info' role='alert' id='queueEmpty'>Your queue is empty! Search for a song, or send your friends to audiopod.me/" + room_id + "</div>"
     if ($("#queueEmpty").length) {
         if (queueLength() != 0)
             $("#queueEmpty").remove();
